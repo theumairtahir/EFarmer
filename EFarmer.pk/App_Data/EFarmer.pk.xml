@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EFarmer.pk</name>
+    </assembly>
+    <members>
+        <member name="T:EFarmer.pk.Common.ContactNumberFormat">
+            <summary>
+            Class to store user's contact details.
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Common.ContactNumberFormat.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor to initiate contact number class values
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.Common.ContactNumberFormat.PhoneNumberFormat">
+            <summary>
+            Method which will return the full phone number.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:EFarmer.pk.Common.ContactNumberFormat.InternationalFormatedPhoneNumber">
+            <summary>
+            Method to get phone number in (+xx-xxx-xxxxxxx) format
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:EFarmer.pk.Common.ContactNumberFormat.LocalFormatedPhoneNumber">
+            <summary>
+            Method to get phone number in (0xxx-xxxxxxx)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:EFarmer.pk.Common.GeoLocation">
+            <summary>
+            Structure to store location attributes
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Common.GeoLocation.DistanceFromAPoint(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
+            <summary>
+            Returns the distance from a location point to this point
+            </summary>
+            <param name="from">Point from which the distance is being calculated to this point</param>
+            <param name="type">Kilometers/Meters</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Common.GeoLocation.DistanceToAPoint(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
+            <summary>
+            Returns the distance from a location point to this point
+            </summary>
+            <param name="to"></param>
+            <param name="type">Kilometers/Meters</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Common.GeoLocation.Distance(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
+            <summary>
+            Returns the distance in miles or kilometers of any two
+            latitude / longitude points.
+            </summary>
+            <param name="pos1"></param>
+            <param name="pos2"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Common.GeoLocation.ToRadian(System.Nullable{System.Decimal})">
+            <summary>
+            Convert to Radians.
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EFarmer.pk.Common.GeoLocation.DistanceType">
+            <summary>
+            The distance type to return the results in.
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.Common.NameFormat.FirstName">
+            <summary>
+            Person's First Name.
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.Common.NameFormat.LastName">
+            <summary>
+            Person's Last Name.
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.Exceptions.DbQueryProcessingFailedException">
+            <summary>
+            Exception will be thrown whenever Database query or stored procedure calling process fails.
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.Exceptions.DbQueryProcessingFailedException.InnerSQLException">
+            <summary>
+            Original SQL Exception caused the problem
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.Exceptions.UniqueKeyViolationException">
+            <summary>
+            This exception will be thrown whenever user violates the unique key constraint for the SQL data
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.Exceptions.UpdateUnsuccessfulException">
+            <summary>
+            Exception thrown whenever the update process remain unsuccessful
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.Controllers.ApiControllers.UsersController">
+            <summary>
+            Controls the requests and responses for users
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.#ctor">
+            <summary>
+            Initializer
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetBuyers">
+            <summary>
+            Returns a list of registered buyers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetSellers">
+            <summary>
+            Returns a list of sellers in the system
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Get(System.Int64)">
+            <summary>
+            Returns a user
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetByContactNumber(System.String,System.String,System.String)">
+            <summary>
+            Returns a user by its contact number
+            </summary>
+            <param name="countryCode"></param>
+            <param name="companyCode"></param>
+            <param name="phone"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.PostUser(EFarmer.pk.ApiModels.UserApiModel)">
+            <summary>
+            Creates a new user
+            </summary>
+            <param name="user">Data for User</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Put(EFarmer.pk.ApiModels.UserApiModel)">
+            <summary>
+            Updates the user
+            </summary>
+            <param name="user">User to be updated</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Delete(System.Int64)">
+            <summary>
+            Deletes this user
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:EFarmer.pk.Models.ModelsFactory">
+            <summary>
+            Class to generate the models from repository
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Models.ModelsFactory.#ctor">
+            <summary>
+            Initializer
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ApiModels.UserApiModel">
+            <summary>
+            Data of user
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Name">
+            <summary>
+            Name of the user
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CountryCode">
+            <summary>
+            Country Code of the phone number
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CompanyCode">
+            <summary>
+            Comapny Code of the phone number
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Phone">
+            <summary>
+            Rest phone number
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Address">
+            <summary>
+            Address of the user
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CityId">
+             <summary>
+            Id of the city to which the user belongs
+             </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Location">
+            <summary>
+            Location of the user
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Id">
+            <summary>
+            Primary Key
+            </summary>
+        </member>
+        <member name="M:ImageWriter.ImageWriter.CheckIfImageFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Method to check if file is image file
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImageWriter.ImageWriter.WriteFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Method to write file onto the disk
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
