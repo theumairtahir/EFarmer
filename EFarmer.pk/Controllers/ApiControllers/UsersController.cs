@@ -32,11 +32,63 @@ namespace EFarmer.pk.Controllers.ApiControllers
             container = repositoryFactory.Build();
         }
         /// <summary>
+        /// Returns a list of users related to a city
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{cityId}", Name = "GetUsersByCity")]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<User>>> GetUsersByCity(short cityId)
+        {
+            try
+            {
+                List<User> users = new List<User>();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var userFactory = scope.Resolve<IUserRepository>())
+                    {
+                        users = await userFactory.GetUsersAsync(new City { Id = cityId });
+                    }
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Returns a list of users
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<User>>> Get(short cityId)
+        {
+            try
+            {
+                List<User> users = new List<User>();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var userFactory = scope.Resolve<IUserRepository>())
+                    {
+                        users = await userFactory.ReadAllAsync();
+                    }
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
         /// Returns a list of registered buyers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Buyers", Name = "GetBuyers")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<User>>> GetBuyers()
         {
@@ -62,7 +114,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Sellers", Name = "GetSellers")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<User>>> GetSellers()
         {
@@ -88,7 +140,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         /// </summary>
         /// <param name="id">Primary Key</param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetUser")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<User> Get(long id)

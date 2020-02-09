@@ -4,6 +4,16 @@
         <name>EFarmer.pk</name>
     </assembly>
     <members>
+        <member name="T:EFarmer.pk.Controllers.ApiControllers.CitiesController">
+            <summary>
+            Api to manage the cities
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.#ctor">
+            <summary>
+            Initializer
+            </summary>
+        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.UsersController">
             <summary>
             Controls the requests and responses for users
@@ -13,6 +23,18 @@
             <summary>
             Initializer
             </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetUsersByCity(System.Int16)">
+            <summary>
+            Returns a list of users related to a city
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Get(System.Int16)">
+            <summary>
+            Returns a list of users
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetBuyers">
             <summary>
