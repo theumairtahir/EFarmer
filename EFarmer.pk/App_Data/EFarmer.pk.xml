@@ -4,107 +4,6 @@
         <name>EFarmer.pk</name>
     </assembly>
     <members>
-        <member name="T:EFarmer.pk.Common.ContactNumberFormat">
-            <summary>
-            Class to store user's contact details.
-            </summary>
-        </member>
-        <member name="M:EFarmer.pk.Common.ContactNumberFormat.#ctor(System.String,System.String,System.String)">
-            <summary>
-            Constructor to initiate contact number class values
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.Common.ContactNumberFormat.PhoneNumberFormat">
-            <summary>
-            Method which will return the full phone number.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:EFarmer.pk.Common.ContactNumberFormat.InternationalFormatedPhoneNumber">
-            <summary>
-            Method to get phone number in (+xx-xxx-xxxxxxx) format
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:EFarmer.pk.Common.ContactNumberFormat.LocalFormatedPhoneNumber">
-            <summary>
-            Method to get phone number in (0xxx-xxxxxxx)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:EFarmer.pk.Common.GeoLocation">
-            <summary>
-            Structure to store location attributes
-            </summary>
-        </member>
-        <member name="M:EFarmer.pk.Common.GeoLocation.DistanceFromAPoint(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
-            <summary>
-            Returns the distance from a location point to this point
-            </summary>
-            <param name="from">Point from which the distance is being calculated to this point</param>
-            <param name="type">Kilometers/Meters</param>
-            <returns></returns>
-        </member>
-        <member name="M:EFarmer.pk.Common.GeoLocation.DistanceToAPoint(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
-            <summary>
-            Returns the distance from a location point to this point
-            </summary>
-            <param name="to"></param>
-            <param name="type">Kilometers/Meters</param>
-            <returns></returns>
-        </member>
-        <member name="M:EFarmer.pk.Common.GeoLocation.Distance(EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation,EFarmer.pk.Common.GeoLocation.DistanceType)">
-            <summary>
-            Returns the distance in miles or kilometers of any two
-            latitude / longitude points.
-            </summary>
-            <param name="pos1"></param>
-            <param name="pos2"></param>
-            <param name="type"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EFarmer.pk.Common.GeoLocation.ToRadian(System.Nullable{System.Decimal})">
-            <summary>
-            Convert to Radians.
-            </summary>
-            <param name="val"></param>
-            <returns></returns>
-        </member>
-        <member name="T:EFarmer.pk.Common.GeoLocation.DistanceType">
-            <summary>
-            The distance type to return the results in.
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.Common.NameFormat.FirstName">
-            <summary>
-            Person's First Name.
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.Common.NameFormat.LastName">
-            <summary>
-            Person's Last Name.
-            </summary>
-        </member>
-        <member name="T:EFarmer.pk.Exceptions.DbQueryProcessingFailedException">
-            <summary>
-            Exception will be thrown whenever Database query or stored procedure calling process fails.
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.Exceptions.DbQueryProcessingFailedException.InnerSQLException">
-            <summary>
-            Original SQL Exception caused the problem
-            </summary>
-        </member>
-        <member name="T:EFarmer.pk.Exceptions.UniqueKeyViolationException">
-            <summary>
-            This exception will be thrown whenever user violates the unique key constraint for the SQL data
-            </summary>
-        </member>
-        <member name="T:EFarmer.pk.Exceptions.UpdateUnsuccessfulException">
-            <summary>
-            Exception thrown whenever the update process remain unsuccessful
-            </summary>
-        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.UsersController">
             <summary>
             Controls the requests and responses for users
@@ -160,6 +59,43 @@
             Deletes this user
             </summary>
             <param name="id"></param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.MakeBuyer(System.Int64)">
+            <summary>
+            Makes user a buyer
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.MakeSeller(System.Int64)">
+            <summary>
+            Makes user a seller
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.AddToFavorites(System.Int64,System.Int64)">
+            <summary>
+            Buyer adds seller to favorites list
+            </summary>
+            <param name="buyerId"></param>
+            <param name="sellerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.GetFavoriteSellersAsync(System.Int64)">
+            <summary>
+            Returns a list of Sellers favourited by the buyer
+            </summary>
+            <param name="buyerId">Primary Key for buyer</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.UpdateLocation(System.Int64,EFarmer.Models.Helpers.GeoLocation)">
+            <summary>
+            Returns a list of Sellers favourited by the buyer
+            </summary>
+            <param name="id">Primary Key</param>
+            <param name="location">New Location</param>
+            <returns></returns>
         </member>
         <member name="T:EFarmer.pk.Models.ModelsFactory">
             <summary>

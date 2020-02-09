@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using EFarmer.Models;
+using EFarmer.Models.Helpers;
 using EFarmer.pk.ApiModels;
 using EFarmer.pk.Models;
 using EFarmerPkModelLibrary.Factories;
@@ -121,7 +122,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<User> GetByContactNumber(string countryCode, string companyCode, string phone)
         {
-            Common.ContactNumberFormat contactNumber = new Common.ContactNumberFormat(countryCode, companyCode, phone);
+            ContactNumberFormat contactNumber = new ContactNumberFormat(countryCode, companyCode, phone);
             try
             {
                 User user = null;
@@ -129,7 +130,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
                 {
                     using (var userRepository = scope.Resolve<IUserRepository>())
                     {
-                        user = userRepository.GetUser(new EFarmer.Models.Helpers.ContactNumberFormat(contactNumber.CountryCode, contactNumber.CompanyCode, contactNumber.PhoneNumber));
+                        user = userRepository.GetUser(new ContactNumberFormat(contactNumber.CountryCode, contactNumber.CompanyCode, contactNumber.PhoneNumber));
                     }
                 }
                 return user;
@@ -144,7 +145,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         /// </summary>
         /// <param name="user">Data for User</param>
         [HttpPost("", Name = "PostUser")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<User> PostUser([FromBody] UserApiModel user)
         {
@@ -240,5 +241,142 @@ namespace EFarmer.pk.Controllers.ApiControllers
                 return BadRequest(ex.Message);
             }
         }
+        /// <summary>
+        /// Makes user a buyer
+        /// </summary>
+        /// <param name="id">Primary Key</param>
+        /// <returns></returns>
+        [HttpGet("MakeBuyer/{id}", Name = "MakeBuyer")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult MakeBuyer(long id)
+        {
+            try
+            {
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var repository = scope.Resolve<IUserRepository>())
+                    {
+                        repository.MakeBuyer(new User { Id = id });
+                    }
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Makes user a seller
+        /// </summary>
+        /// <param name="id">Primary Key</param>
+        /// <returns></returns>
+        [HttpGet("MakeSeller/{id}", Name = "MakeSeller")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult MakeSeller(long id)
+        {
+            try
+            {
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var repository = scope.Resolve<IUserRepository>())
+                    {
+                        repository.MakeSeller(new User { Id = id });
+
+                    }
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Buyer adds seller to favorites list
+        /// </summary>
+        /// <param name="buyerId"></param>
+        /// <param name="sellerId"></param>
+        /// <returns></returns>
+        [HttpGet("AddToFav/{buyerId}/{sellerId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult AddToFavorites(long buyerId, long sellerId)
+        {
+            try
+            {
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var repository = scope.Resolve<IUserRepository>())
+                    {
+                        repository.AddToFavoritesAsync(new User { Id = sellerId }, new User { Id = buyerId });
+                    }
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Returns a list of Sellers favourited by the buyer
+        /// </summary>
+        /// <param name="buyerId">Primary Key for buyer</param>
+        /// <returns></returns>
+        [HttpGet("FavoriteSellers/{buyerId}", Name = "GetFavoriteSellers")]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<User>>> GetFavoriteSellersAsync(long buyerId)
+        {
+            try
+            {
+                var lstUsers = new List<User>();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var repository = scope.Resolve<IUserRepository>())
+                    {
+                        lstUsers = await repository.GetFavoriteBuyersAsync(new User { Id = buyerId });
+
+                    }
+                }
+                return lstUsers;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Returns a list of Sellers favourited by the buyer
+        /// </summary>
+        /// <param name="id">Primary Key</param>
+        /// <param name="location">New Location</param>
+        /// <returns></returns>
+        [HttpPost("UpdateLocation/{id}", Name = "UpdateLocation")]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<List<User>> UpdateLocation(long id, [FromBody]GeoLocation location)
+        {
+            try
+            {
+                var lstUsers = new List<User>();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var repository = scope.Resolve<IUserRepository>())
+                    {
+                        repository.UpdateLocation(new User { Id = id }, location);
+                    }
+                }
+                return lstUsers;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
+
