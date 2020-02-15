@@ -14,6 +14,37 @@
             Initializer
             </summary>
         </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Get">
+            <summary>
+            Returns a list of cities
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Get(System.Int16)">
+            <summary>
+            Returns a city searched by primary key
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Post(EFarmer.pk.ViewModels.ApiModels.CityApiModel)">
+            <summary>
+            Creates a new city
+            </summary>
+            <param name="city">Data for City</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Put(EFarmer.pk.ViewModels.ApiModels.CityApiModel)">
+            <summary>
+            Updates the city
+            </summary>
+            <param name="city">City to be updated</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Delete(System.Int16)">
+            <summary>
+            Deletes this city
+            </summary>
+            <param name="id">Primary Key</param>
+        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.UsersController">
             <summary>
             Controls the requests and responses for users
@@ -127,6 +158,26 @@
         <member name="M:EFarmer.pk.Models.ModelsFactory.#ctor">
             <summary>
             Initializer
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.CityApiModel">
+            <summary>
+            Api Model for City
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Name">
+            <summary>
+            Name of the City
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Location">
+            <summary>
+            Location of Existence
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Id">
+            <summary>
+            Primary Key
             </summary>
         </member>
         <member name="T:EFarmer.pk.ApiModels.UserApiModel">
