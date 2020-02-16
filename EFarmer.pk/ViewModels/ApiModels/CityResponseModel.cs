@@ -9,7 +9,7 @@ namespace EFarmer.pk.ViewModels.ApiModels
     /// <summary>
     /// Api Model for City
     /// </summary>
-    public class CityApiModel
+    public class CityResponseModel
     {
         /// <summary>
         /// Name of the City

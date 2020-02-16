@@ -199,7 +199,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPost("", Name = "PostUser")]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<User> PostUser([FromBody] UserApiModel user)
+        public ActionResult<User> PostUser([FromBody] UserResponseModel user)
         {
             try
             {
@@ -210,7 +210,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
                     {
                         Id = user.CityId
                     },
-                    ContactNumber = new EFarmer.Models.Helpers.ContactNumberFormat(user.CountryCode, user.CompanyCode, user.Phone),
+                    ContactNumber = new ContactNumberFormat(user.CountryCode, user.CompanyCode, user.Phone),
                     Location = user.Location,
                     Name = user.Name
                 };
@@ -236,7 +236,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPut("Update", Name = "UpdateUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] UserApiModel user)
+        public IActionResult Put([FromBody] UserResponseModel user)
         {
             try
             {

@@ -4,6 +4,75 @@
         <name>EFarmer.pk</name>
     </assembly>
     <members>
+        <member name="T:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController">
+            <summary>
+            Controls the requests and responses for advertisements
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.#ctor(ImageUploader.IImageHandler)">
+            <summary>
+            Initializer
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.Get">
+            <summary>
+            Returns a list of advertisments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.GetAdsByCity(System.Int16)">
+            <summary>
+            Returns Advertisements by a specific city
+            </summary>
+            <param name="cityId">Primary Key for city</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.GetAdsByCity(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Returns Advertisements by a specific item
+            </summary>
+            <param name="itemId">Primary Key for Item</param>
+            <param name="max">maximum number of record to be fetched</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.GetAdsByLocation(System.Decimal,System.Decimal,System.Double)">
+            <summary>
+            Returns Advertisements by a specific location
+            </summary>
+            <param name="latitude"></param>
+            <param name="longitude"></param>
+            <param name="radius">Search Radius in Kilometeres</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.GetFavAdsAsync(System.Int64)">
+            <summary>
+            Returns Advertisements favorite by a buyer
+            </summary>
+            <param name="buyerId">Primary Key for Buyer</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.GetPostedAdsAsync(System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Returns Advertisements favorite by a buyer
+            </summary>
+            <param name="sellerId">Primary Key for Buyer</param>
+            <param name="startDate"></param>
+            <param name="endDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.Get(System.Int64)">
+            <summary>
+            Returns an advertisement
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController.PostAdvertisement(EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel)">
+            <summary>
+            Creates a new advertisement
+            </summary>
+            <param name="ad">Data for Advertisement</param>
+        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.CitiesController">
             <summary>
             Api to manage the cities
@@ -27,13 +96,13 @@
             <param name="id">Primary Key</param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Post(EFarmer.pk.ViewModels.ApiModels.CityApiModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Post(EFarmer.pk.ViewModels.ApiModels.CityResponseModel)">
             <summary>
             Creates a new city
             </summary>
             <param name="city">Data for City</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Put(EFarmer.pk.ViewModels.ApiModels.CityApiModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Put(EFarmer.pk.ViewModels.ApiModels.CityResponseModel)">
             <summary>
             Updates the city
             </summary>
@@ -95,13 +164,13 @@
             <param name="phone"></param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.PostUser(EFarmer.pk.ApiModels.UserApiModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.PostUser(EFarmer.pk.ApiModels.UserResponseModel)">
             <summary>
             Creates a new user
             </summary>
             <param name="user">Data for User</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Put(EFarmer.pk.ApiModels.UserApiModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Put(EFarmer.pk.ApiModels.UserResponseModel)">
             <summary>
             Updates the user
             </summary>
@@ -160,67 +229,107 @@
             Initializer
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ViewModels.ApiModels.CityApiModel">
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel">
             <summary>
-            Api Model for City
+            Model for the advertisement
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Name">
-            <summary>
-            Name of the City
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Location">
-            <summary>
-            Location of Existence
-            </summary>
-        </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityApiModel.Id">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Id">
             <summary>
             Primary Key
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ApiModels.UserApiModel">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.ItemId">
+            <summary>
+            Item Related to this advertisement
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.CityId">
+            <summary>
+            City to which this advertisment belongs
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Seller">
+            <summary>
+            Seller who posted the advertisement
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Price">
+            <summary>
+            Price setteled by the seller
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Quantity">
+            <summary>
+            Quantity of the items
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Quality">
+            <summary>
+            Quality of the items
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.CityResponseModel">
+            <summary>
+            Api Model for City
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Name">
+            <summary>
+            Name of the City
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Location">
+            <summary>
+            Location of Existence
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Id">
+            <summary>
+            Primary Key
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ApiModels.UserResponseModel">
             <summary>
             Data of user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Name">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Name">
             <summary>
             Name of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CountryCode">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CountryCode">
             <summary>
             Country Code of the phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CompanyCode">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CompanyCode">
             <summary>
             Comapny Code of the phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Phone">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Phone">
             <summary>
             Rest phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Address">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Address">
             <summary>
             Address of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.CityId">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CityId">
              <summary>
             Id of the city to which the user belongs
              </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Location">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Location">
             <summary>
             Location of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserApiModel.Id">
+        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Id">
             <summary>
             Primary Key
             </summary>

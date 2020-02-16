@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using EFarmer.pk.Common;
 using Microsoft.AspNetCore.Http;
 
 namespace ImageWriter
@@ -14,7 +15,7 @@ namespace ImageWriter
                 return await WriteFile(file);
             }
 
-            return "Invalid image file";
+            return null;
         }
 
         /// <summary>
@@ -52,6 +53,10 @@ namespace ImageWriter
                 {
                     await file.CopyToAsync(bits);
                 }
+                Task.Run(() =>
+                {
+                    CommonFunctions.CompressImage(path);
+                });
             }
             catch (Exception e)
             {

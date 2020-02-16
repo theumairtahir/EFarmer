@@ -92,7 +92,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPost("", Name = "PostCity")]
         [ProducesResponseType(typeof(City), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<City> Post([FromBody] CityApiModel city)
+        public ActionResult<City> Post([FromBody] CityResponseModel city)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPut("Update", Name = "UpdateCity")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] CityApiModel city)
+        public IActionResult Put([FromBody] CityResponseModel city)
         {
             try
             {
