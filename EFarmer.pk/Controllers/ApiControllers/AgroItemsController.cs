@@ -144,7 +144,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPost("", Name = "PostAgroItem")]
         [ProducesResponseType(typeof(AgroItem), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<AgroItem> Post([FromBody] AgroItemResponseModel agroItem)
+        public ActionResult<AgroItem> Post([FromBody] AgroItemRequestModel agroItem)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPut("Update", Name = "UpdateAgroItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] AgroItemResponseModel agroItem)
+        public IActionResult Put([FromBody] AgroItemRequestModel agroItem)
         {
             try
             {

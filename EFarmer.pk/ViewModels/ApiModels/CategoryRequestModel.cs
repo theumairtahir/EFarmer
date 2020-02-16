@@ -3,7 +3,7 @@
     /// <summary>
     /// Data carrier for category
     /// </summary>
-    public class CategoryResponseModel
+    public class CategoryRequestModel
     {
         /// <summary>
         /// Urdu name of the category

@@ -199,7 +199,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPost("", Name = "PostUser")]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<User> PostUser([FromBody] UserResponseModel user)
+        public ActionResult<User> PostUser([FromBody] UserRequestModel user)
         {
             try
             {
@@ -236,7 +236,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPut("Update", Name = "UpdateUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] UserResponseModel user)
+        public IActionResult Put([FromBody] UserRequestModel user)
         {
             try
             {
@@ -270,7 +270,6 @@ namespace EFarmer.pk.Controllers.ApiControllers
         /// Deletes this user
         /// </summary>
         /// <param name="id"></param>
-        // DELETE: api/Delete/5
         [HttpDelete("Delete/{id}", Name = "DeleteUser")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -3,7 +3,7 @@
     /// <summary>
     /// Data model to request agro item api
     /// </summary>
-    public class AgroItemResponseModel
+    public class AgroItemRequestModel
     {
         /// <summary>
         /// Cateogry ot which it belongs

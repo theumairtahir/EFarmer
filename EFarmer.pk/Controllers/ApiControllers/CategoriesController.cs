@@ -92,7 +92,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPost("", Name = "PostCategory")]
         [ProducesResponseType(typeof(Category), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Category> Post([FromBody] CategoryResponseModel category)
+        public ActionResult<Category> Post([FromBody] CategoryRequestModel category)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
         [HttpPut("Update", Name = "UpdateCategory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Put([FromBody] CategoryResponseModel category)
+        public IActionResult Put([FromBody] CategoryRequestModel category)
         {
             try
             {

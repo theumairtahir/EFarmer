@@ -5,7 +5,7 @@ namespace EFarmer.pk.ApiModels
     /// <summary>
     /// Data of user
     /// </summary>
-    public class UserResponseModel
+    public class UserRequestModel
     {
         /// <summary>
         /// Name of the user
