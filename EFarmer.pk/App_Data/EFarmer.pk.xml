@@ -73,6 +73,100 @@
             </summary>
             <param name="ad">Data for Advertisement</param>
         </member>
+        <member name="T:EFarmer.pk.Controllers.ApiControllers.AgroItemsController">
+            <summary>
+            Controls the requests and responses for Agro Items
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.#ctor">
+            <summary>
+            Initializer
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Get">
+            <summary>
+            Returns a list of agro items
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.GetFavItems(System.Int64)">
+            <summary>
+            Returns a list of items fav by buyer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.GetItemsByCategory(System.Int16)">
+            <summary>
+            Returns a list of agro items in a category
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Get(System.Int32)">
+            <summary>
+            Returns an Agro Item
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Post(EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel)">
+            <summary>
+            Creates a new Agro Item
+            </summary>
+            <param name="agroItem">Data for AgroItem</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Put(EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel)">
+            <summary>
+            Updates the AgroItem
+            </summary>
+            <param name="agroItem">Agro Item to be updated</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Delete(System.Int32)">
+            <summary>
+            Deletes this agroItem
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:EFarmer.pk.Controllers.ApiControllers.CategoriesController">
+            <summary>
+            Controls the responses for categories
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.#ctor">
+            <summary>
+            Initializer
+            </summary>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Get">
+            <summary>
+            Returns a list of categories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Get(System.Int16)">
+            <summary>
+            Returns a category
+            </summary>
+            <param name="id">Primary Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Post(EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel)">
+            <summary>
+            Creates a new Category
+            </summary>
+            <param name="category">Data for Category</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Put(EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel)">
+            <summary>
+            Updates the category
+            </summary>
+            <param name="category">Category to be updated</param>
+        </member>
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Delete(System.Int16)">
+            <summary>
+            Deletes this category
+            </summary>
+            <param name="id">Primary Key</param>
+        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.CitiesController">
             <summary>
             Api to manage the cities
@@ -267,6 +361,61 @@
         <member name="P:EFarmer.pk.ViewModels.ApiModels.AdvertismentRequestModel.Quality">
             <summary>
             Quality of the items
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel">
+            <summary>
+            Data model to request agro item api
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Category">
+            <summary>
+            Cateogry ot which it belongs
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.UrduWeightScale">
+            <summary>
+            Weight Scale in urdu
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.WeightScale">
+            <summary>
+            Weight scale in english
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.UrduName">
+            <summary>
+            Urdu name of the agro item
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Name">
+            <summary>
+            Name of the Agro Item
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Id">
+            <summary>
+            Primary Key
+            </summary>
+        </member>
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel">
+            <summary>
+            Data carrier for category
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.UrduName">
+            <summary>
+            Urdu name of the category
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.Name">
+            <summary>
+            Name of the category
+            </summary>
+        </member>
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.Id">
+            <summary>
+            Primary Key
             </summary>
         </member>
         <member name="T:EFarmer.pk.ViewModels.ApiModels.CityResponseModel">
