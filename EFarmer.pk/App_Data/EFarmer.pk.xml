@@ -108,13 +108,13 @@
             <param name="id">Primary Key</param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Post(EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Post(EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel)">
             <summary>
             Creates a new Agro Item
             </summary>
             <param name="agroItem">Data for AgroItem</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Put(EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.AgroItemsController.Put(EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel)">
             <summary>
             Updates the AgroItem
             </summary>
@@ -149,13 +149,13 @@
             <param name="id">Primary Key</param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Post(EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Post(EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel)">
             <summary>
             Creates a new Category
             </summary>
             <param name="category">Data for Category</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Put(EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CategoriesController.Put(EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel)">
             <summary>
             Updates the category
             </summary>
@@ -190,13 +190,13 @@
             <param name="id">Primary Key</param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Post(EFarmer.pk.ViewModels.ApiModels.CityResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Post(EFarmer.pk.ViewModels.ApiModels.CityRequestModel)">
             <summary>
             Creates a new city
             </summary>
             <param name="city">Data for City</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Put(EFarmer.pk.ViewModels.ApiModels.CityResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.CitiesController.Put(EFarmer.pk.ViewModels.ApiModels.CityRequestModel)">
             <summary>
             Updates the city
             </summary>
@@ -258,13 +258,13 @@
             <param name="phone"></param>
             <returns></returns>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.PostUser(EFarmer.pk.ApiModels.UserResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.PostUser(EFarmer.pk.ApiModels.UserRequestModel)">
             <summary>
             Creates a new user
             </summary>
             <param name="user">Data for User</param>
         </member>
-        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Put(EFarmer.pk.ApiModels.UserResponseModel)">
+        <member name="M:EFarmer.pk.Controllers.ApiControllers.UsersController.Put(EFarmer.pk.ApiModels.UserRequestModel)">
             <summary>
             Updates the user
             </summary>
@@ -363,122 +363,122 @@
             Quality of the items
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel">
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel">
             <summary>
             Data model to request agro item api
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Category">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.Category">
             <summary>
             Cateogry ot which it belongs
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.UrduWeightScale">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.UrduWeightScale">
             <summary>
             Weight Scale in urdu
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.WeightScale">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.WeightScale">
             <summary>
             Weight scale in english
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.UrduName">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.UrduName">
             <summary>
             Urdu name of the agro item
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Name">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.Name">
             <summary>
             Name of the Agro Item
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemResponseModel.Id">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.AgroItemRequestModel.Id">
             <summary>
             Primary Key
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel">
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel">
             <summary>
             Data carrier for category
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.UrduName">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel.UrduName">
             <summary>
             Urdu name of the category
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.Name">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel.Name">
             <summary>
             Name of the category
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryResponseModel.Id">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CategoryRequestModel.Id">
             <summary>
             Primary Key
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ViewModels.ApiModels.CityResponseModel">
+        <member name="T:EFarmer.pk.ViewModels.ApiModels.CityRequestModel">
             <summary>
             Api Model for City
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Name">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityRequestModel.Name">
             <summary>
             Name of the City
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Location">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityRequestModel.Location">
             <summary>
             Location of Existence
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityResponseModel.Id">
+        <member name="P:EFarmer.pk.ViewModels.ApiModels.CityRequestModel.Id">
             <summary>
             Primary Key
             </summary>
         </member>
-        <member name="T:EFarmer.pk.ApiModels.UserResponseModel">
+        <member name="T:EFarmer.pk.ApiModels.UserRequestModel">
             <summary>
             Data of user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Name">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.Name">
             <summary>
             Name of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CountryCode">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.CountryCode">
             <summary>
             Country Code of the phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CompanyCode">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.CompanyCode">
             <summary>
             Comapny Code of the phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Phone">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.Phone">
             <summary>
             Rest phone number
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Address">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.Address">
             <summary>
             Address of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.CityId">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.CityId">
              <summary>
             Id of the city to which the user belongs
              </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Location">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.Location">
             <summary>
             Location of the user
             </summary>
         </member>
-        <member name="P:EFarmer.pk.ApiModels.UserResponseModel.Id">
+        <member name="P:EFarmer.pk.ApiModels.UserRequestModel.Id">
             <summary>
             Primary Key
             </summary>
