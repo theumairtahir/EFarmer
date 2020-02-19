@@ -94,7 +94,7 @@
         <div class="clearfix"> </div>
     </div>
     <!-- Header -->
-    <partial name="_HeaderPartial" />
+    <partial name="_Header" />
     <!--Main Menu-->
     <partial name="_MainMenu" />
     <div class="clearfix"></div>
@@ -103,6 +103,12 @@
     <!-- =-=-=-=-=-=-= Category Slider End =-=-=-=-=-=-= -->
     <!--Content-->
     @RenderBody()
+    <!-- =-=-=-=-=-=-= FOOTER =-=-=-=-=-=-= -->
+    <partial name="_Footer" />
+    <!-- =-=-=-=-=-=-= FOOTER END =-=-=-=-=-=-= -->
+    <!-- =-=-=-=-=-=-= Main Content Area End =-=-=-=-=-=-= -->
+    <!-- Post Ad Sticky -->
+    <partial name="_stickyButton" />
     <!--Content-->
     <a href="#0" class="cd-top">Top</a>
     <!-- =-=-=-=-=-=-= JQUERY =-=-=-=-=-=-= -->
@@ -139,6 +145,46 @@
     <script src="js/color-switcher.js"></script>
     <!-- Template Core JS -->
     <script src="js/custom.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#selectCategory").change(function () {
+                var options = '<option label="Select an Item"></option>';
+                if ($(this).val() != 0 || $(this).val() != '0') {
+                    var url = "api/AgroItems/ItemsByCategory/" + $(this).val();
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: url,
+                        success: function (result) {
+
+                            $(result).each(function (i, e) {
+                                options += '<option value="' + e.id + '">' + e.name + '</option>'
+                            });
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(options);
+                        },
+                        error: function () {
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(options);
+                        }
+                    });
+                }
+                else {
+                    $("#selectItem")
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append(options);
+                }
+            });
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

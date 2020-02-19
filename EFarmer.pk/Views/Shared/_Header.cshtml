@@ -1,27 +1,48 @@
-﻿<div class="head">
+﻿@using Autofac
+@{
+    List<SelectListItem> categories = new List<SelectListItem>();
+    var container = new EFarmer.pk.Models.ModelsFactory().Build();
+    using (var scope = container.BeginLifetimeScope())
+    {
+        using (var repository = scope.Resolve<EFarmerPkModelLibrary.Repositories.ICategoryRepository>())
+        {
+            foreach (var item in await repository.ReadAllAsync())
+            {
+                categories.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+        }
+    }
+}
+<div class="header">
     <div class="container">
-        <div class="navbar-top">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand logo ">
-                    <h1 class="animated wow pulse" data-wow-delay=".5s">
-                        <a asp-controller="Home" asp-action="Index" asp-area="">@EFarmer.pk.Common.CommonValues.APP_NAME<span>@EFarmer.pk.Common.CommonValues.APP_NAME_PART</span></a>
-                    </h1>
+        <div class="row">
+            <!-- Logo -->
+            <partial name="_Logo" />
+            <!-- Category -->
+            <div class="col-md-7 col-sm-9">
+                <div class="col-md-3 col-sm-4 no-padding">
+                    <select asp-items="categories" class="category form-control" id="selectCategory">
+                        <option label="Select a Category"></option>
+                    </select>
                 </div>
+                <div class="col-md-9 col-sm-8 no-padding">
+                    <div class="input-group">
+                        <select class="category form-control" id="selectItem">
+                            <option label="Select an Item"></option>
 
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Search</button>
+                        </span>
+                    </div>
+                </div>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <partial name="_NavBar" />
-            </div><!-- /.navbar-collapse -->
+            <!-- Post Button -->
+            <div class="col-md-2 col-sm-3"> <a href="#" class="btn btn-orange btn-block">Post Add </a> <span class="free-flag visible-lg"></span> </div>
         </div>
-        <div class="clearfix"></div>
     </div>
 </div>

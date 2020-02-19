@@ -13,10 +13,29 @@
     </p>
 }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+<section class="section-padding error-page pattern-bg ">
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Row -->
+        <div class="row">
+            <!-- Middle Content Area -->
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="error-container">
+                    @if (Model.ShowRequestId)
+                    {
+                        <div class="error-text">@Model.RequestId</div>
+                    }
+                    else
+                    {
+                        <div class="error-text">Error.</div>
+                    }
+                    <div class="error-info">An error occurred while processing your request.</div>
+                </div>
+            </div>
+
+            <!-- Middle Content Area  End -->
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Main Container End -->
+</section>
