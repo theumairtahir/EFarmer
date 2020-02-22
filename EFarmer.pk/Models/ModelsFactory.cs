@@ -15,7 +15,7 @@ namespace EFarmer.pk.Models
         /// <summary>
         /// Initializer
         /// </summary>
-        public ModelsFactory() : base(new BuildOptions { ConnectionString=Common.CommonValues.CONNECTION_STRING })
+        public ModelsFactory() : base(new BuildOptions { ConnectionString=Common.ConnectionStrings.CONNECTION_STRING })
         {
         }
     }

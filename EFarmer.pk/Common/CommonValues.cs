@@ -7,7 +7,7 @@ namespace EFarmer.pk.Common
     {
         public static readonly string APP_NAME = "e-Farmer";
         public static readonly string APP_NAME_PART = ".pk";
-        public static readonly string CONNECTION_STRING;
+        //public static readonly string CONNECTION_STRING;
         public static readonly string CROP_DEFAULT_PIC = "agri_crop.jpg";
         public static readonly string VEG_DEFAULT_PIC = "agri_veg.jpg";
         public static readonly string FRUIT_DEFAULT_PIC = "agri_fruit.jpg";
@@ -22,7 +22,8 @@ namespace EFarmer.pk.Common
                 .AddJsonFile("appsettings.json")
                 .Build();
             //CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            CONNECTION_STRING = configuration.GetConnectionString("DefaultConnection");
+            //CONNECTION_STRING = configuration.GetConnectionString("Data:DefaultConnection");
+            //CONNECTION_STRING = @"Data Source=tcp:efarmerpkdbserver.database.windows.net,1433;Initial Catalog=EFarmerDb;User Id=efarmerdb@efarmerpkdbserver;Password=@admin12345";
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/EFarmer.pk/Properties/PublishProfiles/EFarmerpk - Web Deploy.pubxml
+/EFarmer.pk/Common/ConnectionStrings.cs
+/EFarmer.pk/Properties/PublishProfiles
