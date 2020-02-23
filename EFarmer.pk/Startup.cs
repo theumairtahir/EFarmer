@@ -90,7 +90,7 @@ namespace EFarmer.pk
                      new CultureInfo("en-US"),
                      new CultureInfo("ur-PK")
                 };
-                opts.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
+                opts.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ur");
                 opts.SupportedCultures = supportedCultures;
                 opts.SupportedUICultures = supportedCultures;
             });

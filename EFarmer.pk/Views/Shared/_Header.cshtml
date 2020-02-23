@@ -1,4 +1,6 @@
 ﻿@using Autofac
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
 @{
     List<SelectListItem> categories = new List<SelectListItem>();
     var container = new EFarmer.pk.Models.ModelsFactory().Build();
@@ -10,39 +12,40 @@
             {
                 categories.Add(new SelectListItem
                 {
-                    Text = item.Name,
+                    Text = _localizer[item.Name].Value,
                     Value = item.Id.ToString()
                 });
             }
         }
     }
 }
+<partial name="_HeaderTop" />
 <div class="header">
     <div class="container">
         <div class="row">
             <!-- Logo -->
             <partial name="_Logo" />
             <!-- Category -->
-            <div class="col-md-7 col-sm-9">
+            <div class="col-md-9 col-sm-9">
                 <div class="col-md-3 col-sm-4 no-padding">
                     <select asp-items="categories" class="category form-control" id="selectCategory">
-                        <option label="Select a Category"></option>
+                        <option label="@_localizer["Select_a_Category"]"></option>
                     </select>
                 </div>
-                <div class="col-md-9 col-sm-8 no-padding">
+                <div class="col-md-7 col-sm-8 no-padding">
                     <div class="input-group">
                         <select class="category form-control" id="selectItem">
-                            <option label="Select an Item"></option>
+                            <option label="@_localizer["Select_an_Item"]"></option>
 
                         </select>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Search</button>
+                            <button class="btn btn-default" type="button">@_localizer["Search"]</button>
                         </span>
                     </div>
                 </div>
             </div>
             <!-- Post Button -->
-            <div class="col-md-2 col-sm-3"> <a href="#" class="btn btn-orange btn-block">Post Add </a> <span class="free-flag visible-lg"></span> </div>
+            @*<div class="col-md-2 col-sm-3"> <a href="#" class="btn btn-orange btn-block">Post Add </a> <span class="free-flag visible-lg"></span> </div>*@
         </div>
     </div>
 </div>
