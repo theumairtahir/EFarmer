@@ -18,6 +18,9 @@ using Microsoft.Extensions.PlatformAbstractions;
 using EFarmerPkModelLibrary.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace EFarmer.pk
 {
@@ -34,7 +37,7 @@ namespace EFarmer.pk
         public void ConfigureServices(IServiceCollection services)
         {
             //dbcontext
-            services.AddDbContext<EFarmerDbModel>(options => options.UseSqlServer(Common.CommonValues.CONNECTION_STRING))
+            services.AddDbContext<EFarmerDbModel>(options => options.UseSqlServer(Common.ConnectionStrings.CONNECTION_STRING))
                 .AddUnitOfWork<EFarmerDbModel>();
             //swagger
             var pathToDoc = Configuration["Swagger:FileName"];
@@ -63,12 +66,35 @@ namespace EFarmer.pk
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //Resources
+            services.AddLocalization(opts =>
+            {
+                opts.ResourcesPath = "Resources";
+            });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddViewLocalization(opts =>
+                {
+                    opts.ResourcesPath = "Resources";
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter.ImageWriter>();
-            
+            services.Configure<RequestLocalizationOptions>(opts =>
+            {
+                var supportedCultures = new List<CultureInfo>()
+                {
+                     new CultureInfo("en"),
+                     new CultureInfo("en-US"),
+                     new CultureInfo("ur-PK")
+                };
+                opts.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
+                opts.SupportedCultures = supportedCultures;
+                opts.SupportedUICultures = supportedCultures;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +113,11 @@ namespace EFarmer.pk
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            //localization
+
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(localizationOptions.Value);
+
 
             app.UseMvc(routes =>
             {
