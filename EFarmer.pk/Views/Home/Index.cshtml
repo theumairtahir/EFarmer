@@ -1,6 +1,7 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = _localizer["Home"];
 }
 
 <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
@@ -15,7 +16,7 @@
                 <div class="heading-panel">
                     <div class="col-xs-12 col-md-12 col-sm-12 text-center">
                         <!-- Main Title -->
-                        <h1>Latest <span class="heading-color"> Featured</span> Listings</h1>
+                        <h1>@_localizer["Latest"] <span class="heading-color"> Featured</span> Listings</h1>
                         <!-- Short Description -->
                         <p class="heading-text">Eu delicata rationibus usu. Vix te putant utroque, ludus fabellas duo eu, his dico ut debet consectetuer.</p>
                     </div>

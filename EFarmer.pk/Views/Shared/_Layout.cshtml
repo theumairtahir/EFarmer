@@ -67,32 +67,32 @@
     </div>
     <!-- =-=-=-=-=-=-= Color Switcher =-=-=-=-=-=-= -->
     @*<div class="color-switcher" id="choose_color">
-        <a href="#." class="picker_close"><i class="fa fa-gear"></i></a>
-        <h5>STYLE SWITCHER</h5>
-        <div class="theme-colours">
-            <p> Choose Colour style </p>
-            <ul>
-                <li>
-                    <a href="#." class="defualt" id="defualt"></a>
-                </li>
-                <li>
-                    <a href="#." class="green" id="green"></a>
-                </li>
-                <li>
-                    <a href="#." class="blue" id="blue"></a>
-                </li>
-                <li>
-                    <a href="#." class="red" id="red"></a>
-                </li>
+            <a href="#." class="picker_close"><i class="fa fa-gear"></i></a>
+            <h5>STYLE SWITCHER</h5>
+            <div class="theme-colours">
+                <p> Choose Colour style </p>
+                <ul>
+                    <li>
+                        <a href="#." class="defualt" id="defualt"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="green" id="green"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="blue" id="blue"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="red" id="red"></a>
+                    </li>
 
-                <li>
-                    <a href="#." class="sea-green" id="sea-green"></a>
-                </li>
+                    <li>
+                        <a href="#." class="sea-green" id="sea-green"></a>
+                    </li>
 
-            </ul>
-        </div>
-        <div class="clearfix"> </div>
-    </div>*@
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>*@
     <!-- Header -->
     <partial name="_Header" />
     <!--Main Menu-->
@@ -150,21 +150,22 @@
             $("#selectCategory").change(function () {
                 var options = '<option label="Select an Item"></option>';
                 if ($(this).val() != 0 || $(this).val() != '0') {
-                    var url = "api/AgroItems/ItemsByCategory/" + $(this).val();
+                    //var url=@Url.Action("GetAgroItemsByCategory","Home")+ $(this).val();
+                    var url = "Home/GetAgroItemsByCategory/" + $(this).val();
                     $.ajax({
                         async: false,
                         type: "GET",
                         url: url,
                         success: function (result) {
 
-                            $(result).each(function (i, e) {
-                                options += '<option value="' + e.id + '">' + e.name + '</option>'
-                            });
+                            //$(result).each(function (i, e) {
+                            //    options += '<option value="' + e.id + '">' + e.name + '</option>'
+                            //});
                             $("#selectItem")
                                 .find('option')
                                 .remove()
                                 .end()
-                                .append(options);
+                                .append(result);
                         },
                         error: function () {
                             $("#selectItem")

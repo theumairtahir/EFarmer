@@ -60,9 +60,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\Home\" />
-    <Folder Include="Resources\ur-PK\" />
-  </ItemGroup>
-
 </Project>
