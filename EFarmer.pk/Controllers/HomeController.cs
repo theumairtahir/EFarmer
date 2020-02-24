@@ -22,13 +22,23 @@ namespace EFarmer.pk.Controllers
         }
         public IActionResult Index(string culture)
         {
-            culture = (culture == null) ? "en" : culture;
-            if (Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] != null
-                && !Request.Cookies[CookieRequestCultureProvider.DefaultCookieName].Contains(CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture))))
+            var cookie = Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+            if (cookie == null)
             {
+                culture = culture ?? "en";
                 Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
                         CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                         new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) });
+            }
+            else
+            {
+                culture = culture ?? CookieRequestCultureProvider.ParseCookieValue(cookie).Cultures[0].Value;
+                if (!cookie.Contains(CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture))))
+                {
+                    Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                        CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                        new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) });
+                }
             }
             return View();
         }

@@ -1,5 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+@{
+    string rtl = "";
+    if (!_localizer["rtl"].IsResourceNotFound)
+    {
+        rtl = _localizer["rtl"].Value;
+    }
+}
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <!--[if IE]>
@@ -32,6 +41,11 @@
     <link href="css/nouislider.min.css" rel="stylesheet" type="text/css" />
     <!-- =-=-=-=-=-=-= Listing Slider =-=-=-=-=-=-= -->
     <link href="css/slider.css" rel="stylesheet" type="text/css" />
+    @if (!_localizer["rtl"].IsResourceNotFound)
+    {
+        <!--Bootstrap RTL-->
+        <link href="css/bootstrap-rtl.css" rel="stylesheet">
+    }
     <!-- =-=-=-=-=-=-= Owl carousel =-=-=-=-=-=-= -->
     <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="css/owl.theme.css">
@@ -55,7 +69,7 @@
     @RenderSection("Styles", required: false)
     @*<![endif]*@
 </head>
-<body>
+<body class="@rtl">
     <div class="banner">
         @RenderSection("PageHeader", false)
     </div>
