@@ -129,11 +129,17 @@
   <data name="Fruit" xml:space="preserve">
     <value>پھل</value>
   </data>
+  <data name="Lahore" xml:space="preserve">
+    <value>لاہور</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>زبان</value>
   </data>
   <data name="Log in" xml:space="preserve">
     <value>Log in</value>
+  </data>
+  <data name="pesticides" xml:space="preserve">
+    <value>کیڑے مار دوائیں</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
@@ -143,6 +149,9 @@
   </data>
   <data name="Seed" xml:space="preserve">
     <value>بیج</value>
+  </data>
+  <data name="Select Option" xml:space="preserve">
+    <value>آپشن منتخب کریں</value>
   </data>
   <data name="Select_an_Item" xml:space="preserve">
     <value>ایک چیز منتخب کریں</value>

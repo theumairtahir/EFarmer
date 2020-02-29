@@ -1,0 +1,70 @@
+﻿@using Autofac
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+@{
+    var container = new EFarmer.pk.Models.ModelsFactory().Build();
+    List<SelectListItem> categories = new List<SelectListItem>();
+    List<SelectListItem> cities = new List<SelectListItem>();
+    using (var scope = container.BeginLifetimeScope())
+    {
+        using (var repository = scope.Resolve<EFarmerPkModelLibrary.Repositories.ICategoryRepository>())
+        {
+            foreach (var item in await repository.ReadAllAsync())
+            {
+                categories.Add(new SelectListItem
+                {
+                    Text = _localizer[item.Name].Value,
+                    Value = item.Id.ToString()
+                });
+            }
+        }
+        using (var repository = scope.Resolve<EFarmerPkModelLibrary.Repositories.ICityRepository>())
+        {
+            foreach (var item in await repository.ReadAllAsync())
+            {
+                cities.Add(new SelectListItem
+                {
+                    Text = _localizer[item.Name].Value,
+                    Value = item.Id.ToString()
+                });
+            }
+        }
+    }
+}
+<div id="banner">
+    <div class="container">
+        <div class="search-container">
+            <!-- Form -->
+            <h2>What are you looking for ?</h2>
+            <form>
+                <!-- Search Input -->
+                <div class="col-md-4 col-sm-6 col-xs-12 no-padding">
+                    <div class="form-group">
+                        <input type="text" class="form-control banner-icon-search" name="keyword" placeholder="any @_localizer["crop"], @_localizer["fruit"] or @_localizer["vegetable"] or even any @_localizer[" pesticides"]" value="">
+                    </div>
+                </div>
+                <!-- Search Category -->
+                <div class="col-md-3 col-sm-6 col-xs-12 no-padding">
+                    <div class="form-group">
+                        <select asp-items="categories" class="category form-control">
+                            <option label=@_localizer["Select Option"]></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Search Location -->
+                <div class="col-md-3 col-sm-9 col-xs-12 no-padding">
+                    <div class="form-group">
+                        <select asp-items="cities" class="cities form-control">
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-12 no-padding">
+                    <div class="form-group form-action">
+                        <button type="button" class="btn btn-theme btn-search-submit">@_localizer["Search"]</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

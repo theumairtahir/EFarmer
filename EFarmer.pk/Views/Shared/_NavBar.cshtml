@@ -1,13 +1,86 @@
-﻿<ul class="nav navbar-nav link-effect-4">
-    <li class="active"><a href="index.html" data-hover="Home">Home</a> </li>
-    <li><a href="about.html" data-hover="About">About </a> </li>
-    <li><a href="gallery.html" data-hover="Gallery">Gallery</a></li>
-    <li class="dropdown">
-        <a href="codes.html" class="dropdown-toggle" data-hover="Pages" data-toggle="dropdown">Pages <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li><a href="icons.html">Icons</a></li>
-            <li><a href="codes.html">Short Codes</a></li>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+<ul class="menu-links">
+    <!-- active class -->
+    <li>
+        <a href="@Url.Action("Index","Home")"> @_localizer["Home"] </a>
+    </li>
+    <li>
+        <a href="javascript:void(0)">@_localizer["Agri Products"] <i class="fa fa-angle-down fa-indicator"></i></a>
+        <!-- drop down multilevel  -->
+        <ul class="drop-down-multilevel">
+            <li>
+                <a href="@Url.Action("ViewCrops","AgriProducts")">@_localizer["Crops"] @*<span class="label label-info">New</span>*@</a>
+            </li>
+            <li>
+                <a href="@Url.Action(" ViewFruits","AgriProducts")">@_localizer["Fruits"]</a>
+            </li>
+            <li>
+                <a href="@Url.Action(" ViewVegetables","AgriProducts")">@_localizer["Vegetables"]</a>
+            </li>
         </ul>
     </li>
-    <li><a href="contact.html" data-hover="Contact">Contact</a></li>
+    <li>
+        <a href="javascript:void(0)">@_localizer["Agro Chemicals"] <i class="fa fa-angle-down fa-indicator"></i></a>
+        <!-- drop down multilevel  -->
+        <ul class="drop-down-multilevel">
+            <li>
+                <a href="@Url.Action("ViewPesticides","AgroChemicals")">@_localizer["Pesticides"] @*<span class="label label-info">New</span>*@</a>
+            </li>
+            <li>
+                <a href="@Url.Action(" ViewFertilizers","AgroChemicals")">@_localizer["Fertilizers"]</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:void(0)">@_localizer["Agro Seeds"] <i class="fa fa-angle-down fa-indicator"></i></a>
+        <!-- drop down multilevel  -->
+        <ul class="drop-down-multilevel">
+            <li>
+                <a href="@Url.Action("ViewCropSeeds","AgroSeeds")">@_localizer["Crops"] @*<span class="label label-info">New</span>*@</a>
+            </li>
+            <li>
+                <a href="@Url.Action(" ViewFruitSeeds","AgroSeeds")">@_localizer["Fruits"]</a>
+            </li>
+            <li>
+                <a href="@Url.Action(" ViewVegetableSeeds","AgroSeeds")">@_localizer["Vegetables"]</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="@Url.Action("Index","AgroMachinery")">@_localizer["Agro Machinery"] <span class="label label-info">@_localizer["New"]</span></a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Index","Blogs")">@_localizer["Blogs"] @*<span class="label label-info">New</span>*@</a>
+    </li>
+
+    @*<li>
+            <a href="javascript:void(0)"><span class="flaticon-cogwheel"></span> <i class="fa fa-angle-down fa-indicator"></i></a>
+            <!-- drop down multilevel  -->
+            <ul class="drop-down-multilevel">
+                <li>
+                    <a href="@Url.Action("ViewCropSeeds","AgroSeeds")">@_localizer["Login/Register"]</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Advertisements")">@_localizer["My Ads"]</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("About Us","Home")">@_localizer["About Us"]</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Contact Us","Home")">@_localizer["Contact Us"]</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("FAQs","Home")">@_localizer["FAQs"]</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">@_localizer["Language"] <i class="fa fa-angle-down fa-indicator"></i></a>
+                    <ul class="drop-down-multilevel">
+                        <li><a href="@Url.Action("Index","Home",new { culture="en-US"})">@_localizer["English"]</a></li>
+                        <li><a href="@Url.Action("Index","Home",new { culture="ur-PK"})">@_localizer["Urdu"]</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>*@
 </ul>

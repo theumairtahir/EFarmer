@@ -56,7 +56,7 @@
     <!-- =-=-=-=-=-=-= Template Color =-=-=-=-=-=-= -->
     <link rel="stylesheet" id="color" href="css/colors/defualt.css" type="text/css" />
     <!-- =-=-=-=-=-=-= For Style Switcher =-=-=-=-=-=-= -->
-    <link rel="stylesheet" id="theme-color" type="text/css" href="#" />
+    <link rel="stylesheet" id="theme-color" type="text/css" href="~/css/colors/defualt.css" />
     <!-- JavaScripts -->
     <script src="js/modernizr.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -107,23 +107,346 @@
             </div>
             <div class="clearfix"> </div>
         </div>*@
-    <!-- Header -->
-    <partial name="_Header" />
-    <!--Main Menu-->
-    <partial name="_MainMenu" />
-    <div class="clearfix"></div>
-    <!-- =-=-=-=-=-=-= Category Slider =-=-=-=-=-=-= -->
-    <partial name="_CategorySlider" />
-    <!-- =-=-=-=-=-=-= Category Slider End =-=-=-=-=-=-= -->
-    <!--Content-->
-    @RenderBody()
-    <!-- =-=-=-=-=-=-= FOOTER =-=-=-=-=-=-= -->
-    <partial name="_Footer" />
-    <!-- =-=-=-=-=-=-= FOOTER END =-=-=-=-=-=-= -->
-    <!-- =-=-=-=-=-=-= Main Content Area End =-=-=-=-=-=-= -->
+    <!--<partial name="_HeaderTop" />-->
+    <!-- =-=-=-=-=-=-= Centered Navigation Menu =-=-=-=-=-=-= -->
+    <div class="transparent-header mobile-custom">
+        <partial name="_HeaderTop" />
+        <partial name="_MainMenu" />
+    </div>
+    <!-- =-=-=-=-=-=-= Centered Navigation Menu End  =-=-=-=-=-=-= -->
+    <!-- =-=-=-=-=-=-= Home Hero Section  =-=-=-=-=-=-= -->
+    <partial name="_SearchBar" />
+    <!-- =-=-=-=-=-=-= Home Hero Section  =-=-=-=-=-=-= -->
+    <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
+    <div class="main-content-area clearfix">
+        <!-- =-=-=-=-=-=-= Featured Listing =-=-=-=-=-=-= -->
+        <section class="custom-padding">
+            <!-- Main Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    <!-- Heading Area -->
+                    <div class="heading-panel">
+                        <div class="col-xs-12 col-md-12 col-sm-12 text-center">
+                            <!-- Main Title -->
+                            <h1>Browse Ads <span class="heading-color"> Categories</span></h1>
+                            <!-- Short Description -->
+                            <p class="heading-text">Check the list of all categories and subcategories available for our items in directory/</p>
+                        </div>
+                    </div>
+                    <!-- Middle Content Box -->
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="row">
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/1.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Mobiles</span>
+                                            <div class="ads-count">2,768 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/2.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Cars</span>
+                                            <div class="ads-count">4,168 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/3.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Bikes</span>
+                                            <div class="ads-count">4,168 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/4.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Jobs</span>
+                                            <div class="ads-count">4,168 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/5.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Services</span>
+                                            <div class="ads-count">1,231 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/6.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Electronics</span>
+                                            <div class="ads-count">4,168 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/7.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Real Estate</span>
+                                            <div class="ads-count">3,456 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/8.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Fashion</span>
+                                            <div class="ads-count">2,009 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/9.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Animals</span>
+                                            <div class="ads-count">570 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/10.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Education</span>
+                                            <div class="ads-count">3,168 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/11.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Furniture</span>
+                                            <div class="ads-count">3,000 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/12.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Matrimony</span>
+                                            <div class="ads-count">1,100 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/13.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Sports</span>
+                                            <div class="ads-count">2,100 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/14.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Community</span>
+                                            <div class="ads-count">700 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/15.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Computers</span>
+                                            <div class="ads-count">3,130 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Minimal Category -->
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                <a href="#">
+                                    <div class="minimal-category">
+                                        <div class="minimal-img">
+                                            <img alt="" class="img-responsive" src="images/minimal/16.jpg">
+                                        </div>
+                                        <div class="minimal-overlay"></div>
+                                        <div class="description">
+                                            <span>Health & Fitness</span>
+                                            <div class="ads-count">3,100 Ads</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        @RenderBody()
+                        <div class="text-center">
+                            <div class="load-more-btn margin-top-30">
+                                <button class="btn btn-theme" id="loadMore"> Load More <i class="fa fa-refresh"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Middle Content Box End -->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </section>
+        <!-- =-=-=-=-=-=-= Featured Listing End =-=-=-=-=-=-= -->
+        <!-- =-=-=-=-=-=-= FOOTER =-=-=-=-=-=-= -->
+        <footer class="minimal-footer-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <aside class="widget">
+                            <h3 class="widget-title">About Us</h3>
+                            <p>You bet your life Speed Racer he will see it through. Solets make the most of this beautiful day. Since we're together. </p>
+                        </aside>
+                    </div>
+                    <div class="col-sm-4">
+                        <aside class="widget text-center">
+                            <img alt="Image" src="images/logo-1.png">
+                            <div class="social-links">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-dribbble"></i></a>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-sm-4">
+                        <aside class="widget">
+                            <h3 class="widget-title">Newsletter</h3>
+                            <p>Subscribe to our newsletter to get our agency latest updates</p>
+                            <form class="subscribe-form">
+                                <input placeholder="Email Address" type="text">
+                                <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="entry-footer">
+                            Copyright © 2015 - All Rights Reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- =-=-=-=-=-=-= FOOTER END =-=-=-=-=-=-= -->
+    </div>
+    <!-- Main Content Area End -->
     <!-- Post Ad Sticky -->
-    <partial name="_stickyButton" />
-    <!--Content-->
+    <a href="#" class="sticky-post-button">
+        <span class="sell-icons">
+            <i class="flaticon-transport-9"></i>
+        </span>
+        <h4>SELL</h4>
+    </a>
+    <!-- Back To Top -->
     <a href="#0" class="cd-top">Top</a>
     <!-- =-=-=-=-=-=-= JQUERY =-=-=-=-=-=-= -->
     <script src="js/jquery.min.js"></script>

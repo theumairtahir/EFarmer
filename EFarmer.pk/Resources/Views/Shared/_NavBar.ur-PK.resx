@@ -117,25 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
+  <data name="About Us" xml:space="preserve">
+    <value>ہمارے بارے میں</value>
+  </data>
+  <data name="Agri Products" xml:space="preserve">
+    <value>زرعی مصنوعات</value>
+  </data>
+  <data name="Agro Chemicals" xml:space="preserve">
+    <value>زرعی کیمیکل</value>
+  </data>
+  <data name="Agro Machinery" xml:space="preserve">
+    <value>زراعت کی مشینری</value>
+  </data>
+  <data name="Agro Seeds" xml:space="preserve">
+    <value>زراعت کے بیج</value>
+  </data>
+  <data name="Blogs" xml:space="preserve">
+    <value>بلاگ</value>
+  </data>
+  <data name="Contact Us" xml:space="preserve">
+    <value>رابطہ کریں</value>
+  </data>
+  <data name="Crops" xml:space="preserve">
+    <value>فصلیں</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>انگریزی</value>
   </data>
-  <data name="FAQS" xml:space="preserve">
-    <value>FAQS</value>
+  <data name="FAQs" xml:space="preserve">
+    <value>عمومی سوالنامہ</value>
+  </data>
+  <data name="Fertilizers" xml:space="preserve">
+    <value>کھادیں</value>
+  </data>
+  <data name="Fruits" xml:space="preserve">
+    <value>پھل</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>زبان</value>
   </data>
-  <data name="Log in" xml:space="preserve">
-    <value>Log in</value>
+  <data name="Login/Register" xml:space="preserve">
+    <value>لاگ ان / رجسٹر</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
+  <data name="My Ads" xml:space="preserve">
+    <value>میرے اشتہارات</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>نئی</value>
+  </data>
+  <data name="Pesticides" xml:space="preserve">
+    <value>کیڑے مار دوا</value>
   </data>
   <data name="Urdu" xml:space="preserve">
     <value>اردو</value>
+  </data>
+  <data name="Vegetables" xml:space="preserve">
+    <value>سبزیاں</value>
   </data>
 </root>
