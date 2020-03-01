@@ -1,0 +1,12 @@
+﻿@model EFarmer.pk.ViewModels.BlogsViewModels.BlogPostViewModel
+<!-- Blog Post-->
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="blog-post">
+        <div class="post-img">
+            <a href=""> <img class="img-responsive" alt="" src="@Url.Content("~/images/blog/"+Model.Picture)"> </a>
+        </div>
+        <div class="post-info"> <a href="">@Model.PostedDateTime</a> @*<a href="#">23 comments</a>*@ </div>
+        <h3 class="post-title"> <a href="#"> @Model.Title</a> </h3>
+        <p class="post-excerpt">@Model.ShortDescription</p>
+    </div>
+</div>

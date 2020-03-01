@@ -1,7 +1,40 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Blogs";
+    var breadcrumb = Context.Request.Path.Value.Split('/');
 }
+
+@section Breadcrumb{
+    <!-- =-=-=-=-=-=-= Transparent Breadcrumb =-=-=-=-=-=-= -->
+    @*<div class="page-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="header-page">
+                            <h1>Latest News & Trends</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <!-- Small Breadcrumb -->
+    @*<div class="small-breadcrumb">
+            <div class="container">
+                <div class=" breadcrumb-link">
+                    <ul>
+                        @foreach (var item in breadcrumb)
+                        {
+                            <li><a href="index.html">@item</a></li>
+                        }
+
+                        @*<li><a href="#">Pages</a></li>
+                        <li><a class="active" href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+}
+
 <section class="section-padding error-page pattern-bgs gray ">
     <!-- Main Container -->
     <div class="container">
@@ -12,123 +45,19 @@
                 <div class="row">
                     <!-- Blog Archive -->
                     <div class="posts-masonry">
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/1.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Sony Xperia XZ: Release date and everything you need to know</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/2.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Review of the 2017 Honda Accord Sport </a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/3.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> How to Buy a House 6 Must-Dos Before Buying A Home</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/5.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Refreshed Volkswagen Golf due early next month</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/6.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#">MacBook Air 2017 release date, news and rumors</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/7.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Samsung Unveils Galaxy C9,First Smartphone With 6GB of RAM</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis . </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/8.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Things do verfiy brfore purchasing any house</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/9.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Lamborghini Aventador facelift spied with racy new look</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
-                        <!-- Blog Post-->
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="blog-post">
-                                <div class="post-img">
-                                    <a href="#"> <img class="img-responsive" alt="" src="images/blog/10.jpg"> </a>
-                                </div>
-                                <div class="post-info"> <a href="">Aug 30, 2017</a> <a href="#">23 comments</a> </div>
-                                <h3 class="post-title"> <a href="#"> Entaniya 250 Micro  fisheye lenses feature 250-degree FOV</a> </h3>
-                                <p class="post-excerpt"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam neque tempora odit atque repellat est molestiae perferendis. </p>
-                            </div>
-                        </div>
-                        <!-- Blog Grid -->
+
+
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                        <ul class="pagination pagination-lg">
-                            <li> <a href="#"> <i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-                            <li> <a href="#">1</a> </li>
-                            <li class="active"> <a href="#">2</a> </li>
-                            <li> <a href="#">3</a> </li>
-                            <li> <a href="#">4</a> </li>
-                            <li><a href="#"> <i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
+                    @*<div class="col-md-12 col-xs-12 col-sm-12">
+                            <ul class="pagination pagination-lg">
+                                <li> <a href="#"> <i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                                <li> <a href="#">1</a> </li>
+                                <li class="active"> <a href="#">2</a> </li>
+                                <li> <a href="#">3</a> </li>
+                                <li> <a href="#">4</a> </li>
+                                <li><a href="#"> <i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>*@
                 </div>
             </div>
         </div>
@@ -136,3 +65,13 @@
     </div>
     <!-- Main Container End -->
 </section>
+
+@section scripts{
+    <script>
+        for (var i = 1; i <= 3; i++) {
+            $.get('@Url.Action("_BlogPostPartial", "Blogs")', { id: i }, function (content) {
+                $(".posts-masonry").append(content);
+        });
+        }
+    </script>
+}

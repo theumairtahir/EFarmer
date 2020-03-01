@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = _localizer["Home"];
 }
-
+@section PageHeader{
+    <partial name="_SearchBar" />
+}
 <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
 <div class="main-content-area clearfix">
     <!-- =-=-=-=-=-=-= Featured Ads =-=-=-=-=-=-= -->
@@ -457,3 +459,47 @@
     <!-- =-=-=-=-=-=-= Our Partners  End =-=-=-=-=-=-= -->
 </div>
 
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#selectCategory").change(function () {
+                var options = '<option label="Select an Item"></option>';
+                if ($(this).val() != 0 || $(this).val() != '0') {
+                    //var url=@Url.Action("GetAgroItemsByCategory","Home")+ $(this).val();
+                    var url = "Home/GetAgroItemsByCategory/" + $(this).val();
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: url,
+                        success: function (result) {
+
+                            //$(result).each(function (i, e) {
+                            //    options += '<option value="' + e.id + '">' + e.name + '</option>'
+                            //});
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(result);
+                        },
+                        error: function () {
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(options);
+                        }
+                    });
+                }
+                else {
+                    $("#selectItem")
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append(options);
+                }
+            });
+        });
+    </script>
+
+}
