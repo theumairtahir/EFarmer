@@ -27,6 +27,18 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginAccountViewModel model)
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ForgetAccount(LoginAccountViewModel model)
+        {
+            return View();
+        }
         public IActionResult Terms()
         {
             return View();

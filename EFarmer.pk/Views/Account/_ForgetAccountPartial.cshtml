@@ -1,0 +1,29 @@
+﻿@model EFarmer.pk.ViewModels.AccountViewModels.ForgetAccountViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+<!-- Forget Password -->
+<div class="custom-modal">
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header rte">
+                    <h2 class="modal-title">@_localizer["Forgot Your Password ?"]</h2>
+</div>
+                <form asp-action="ForgetAccount" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" placeholder="@_localizer["Your Email"]" class="form-control" type="email">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default">@_localizer["Reset My Account"]</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">@_localizer["Cancel"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

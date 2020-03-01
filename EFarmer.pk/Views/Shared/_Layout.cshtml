@@ -81,32 +81,32 @@
     </div>
     <!-- =-=-=-=-=-=-= Color Switcher =-=-=-=-=-=-= -->
     @*<div class="color-switcher" id="choose_color">
-        <a href="#." class="picker_close"><i class="fa fa-gear"></i></a>
-        <h5>STYLE SWITCHER</h5>
-        <div class="theme-colours">
-            <p> Choose Colour style </p>
-            <ul>
-                <li>
-                    <a href="#." class="defualt" id="defualt"></a>
-                </li>
-                <li>
-                    <a href="#." class="green" id="green"></a>
-                </li>
-                <li>
-                    <a href="#." class="blue" id="blue"></a>
-                </li>
-                <li>
-                    <a href="#." class="red" id="red"></a>
-                </li>
+            <a href="#." class="picker_close"><i class="fa fa-gear"></i></a>
+            <h5>STYLE SWITCHER</h5>
+            <div class="theme-colours">
+                <p> Choose Colour style </p>
+                <ul>
+                    <li>
+                        <a href="#." class="defualt" id="defualt"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="green" id="green"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="blue" id="blue"></a>
+                    </li>
+                    <li>
+                        <a href="#." class="red" id="red"></a>
+                    </li>
 
-                <li>
-                    <a href="#." class="sea-green" id="sea-green"></a>
-                </li>
+                    <li>
+                        <a href="#." class="sea-green" id="sea-green"></a>
+                    </li>
 
-            </ul>
-        </div>
-        <div class="clearfix"> </div>
-    </div>*@
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>*@
     <!-- =-=-=-=-=-=-= Light Header =-=-=-=-=-=-= -->
     <div class="colored-header">
         <!-- Top Bar -->
@@ -149,7 +149,7 @@
     </div>
     <!-- Small Breadcrumb -->
     @RenderSection("Breadcrumb", false)
-    
+
     <!-- Small Breadcrumb -->
     <!-- =-=-=-=-=-=-= Transparent Breadcrumb End =-=-=-=-=-=-= -->
     <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
@@ -162,6 +162,7 @@
         <partial name="_Footer" />
     </div>
     <!-- Main Content Area End -->
+    @RenderSection("ModalSection", false)
     <!-- Post Ad Sticky -->
     <a href="#" class="sticky-post-button hidden-xs">
         <span class="sell-icons">

@@ -33,4 +33,11 @@ namespace EFarmer.pk.ViewModels.AccountViewModels
         [Display(Name = "Remember Me")]
         public bool IsRemembered { get; set; }
     }
+    public class ForgetAccountViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
 }
