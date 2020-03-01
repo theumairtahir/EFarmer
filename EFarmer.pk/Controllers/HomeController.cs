@@ -1,12 +1,15 @@
 ﻿using Autofac;
 using EFarmer.Models;
 using EFarmer.pk.Models;
+using EFarmer.pk.ViewModels.HomeViewModels;
 using EFarmer.ViewModels;
 using EFarmerPkModelLibrary.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EFarmer.pk.Controllers
@@ -15,10 +18,12 @@ namespace EFarmer.pk.Controllers
     {
         private readonly IContainer _container;
         private readonly IStringLocalizer<HomeController> _localizer;
-        public HomeController(IStringLocalizer<HomeController> localizer)
+        readonly IHostingEnvironment environment;
+        public HomeController(IStringLocalizer<HomeController> localizer, IHostingEnvironment environment)
         {
             _container = new ModelsFactory().Build();
             _localizer = localizer;
+            this.environment = environment;
         }
         public IActionResult Index(string culture)
         {
@@ -82,6 +87,106 @@ namespace EFarmer.pk.Controllers
                 }
             }
             return Content(options);
+        }
+        public IActionResult _IndexAdsPartial()
+        {
+            //var imagePath = environment.WebRootFileProvider.GetFileInfo("uploaded_images/" + Common.CommonValues.CROP_DEFAULT_PIC)?.PhysicalPath;
+            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            return PartialView(ads);
+        }
+        public IActionResult _LoadAdPartial(int count)
+        {
+            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            for (int i = 1; i <= count; i++)
+            {
+                ads.Add(new AdViewModel
+                {
+                    Category = "Crops",
+                    Id = 1,
+                    CategoryId = 1,
+                    Location = "Lahore",
+                    Picture = imagePath,
+                    Price = "Rs. 10000",
+                    Rating = 4,
+                    Span = "15 mins ago",
+                    Title = "Lorem Ipsum"
+                });
+            }
+            return PartialView("_IndexAdsPartial", ads);
         }
     }
 }

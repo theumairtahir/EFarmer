@@ -1,0 +1,43 @@
+﻿@model EFarmer.pk.ViewModels.HomeViewModels.AdViewModel
+<!-- Listing Ad Grid -->
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+    <div class="white category-grid-box-1 clearfix">
+        <!-- Image Box -->
+        <div class="image">
+            <img alt="@(Model.Title+"'s Image")" src="@Url.Content("~/uploaded_images/"+Model.Picture)" class="img-responsive">
+        </div>
+        <!-- Short Description -->
+        <div class="short-description-1 clearfix">
+            <!-- Category Title -->
+            <div class="category-title"> <span><a href="@Url.Action("Index","Categories", new { id=Model.CategoryId})">@Model.Category</a></span> </div>
+            <!-- Ad Title -->
+            <h3>
+                <a title="" href="@Url.Action("Details", "Items", new { id=Model.Id})">@Model.Title</a>
+            </h3>
+            <!-- Location -->
+            <p class="location"><i class="fa fa-map-marker"></i>@Model.Location</p>
+            <!-- Rating -->
+            <div class="rating">
+                @for (int i = 1; i <= Model.Rating; i++)
+                {
+                    <i class="fa fa-star"></i>
+                }
+                @for (int i = 1; i <= (5 - Model.Rating); i++)
+                {
+                    <i class="fa fa-star-o"></i>
+                }
+                @*<span class="rating-count">(2)</span>*@
+
+            </div>
+            <!-- Price -->
+            <span class="ad-price">@Model.Price</span>
+        </div>
+        <!-- Ad Meta Stats -->
+        <div class="ad-info-1">
+            <ul>
+                @*<li> <i class="fa fa-eye"></i><a href="#">445 Views</a> </li>*@
+                <li> <i class="fa fa-clock-o"></i>@Model.Span</li>
+            </ul>
+        </div>
+    </div>
+</div>

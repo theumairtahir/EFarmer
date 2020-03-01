@@ -1,0 +1,6 @@
+﻿@model IEnumerable<EFarmer.pk.ViewModels.HomeViewModels.AdViewModel>
+
+@foreach (var item in Model)
+{
+    <partial name="_AdPartial" model="item" />
+}
