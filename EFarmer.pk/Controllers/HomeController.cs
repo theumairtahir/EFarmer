@@ -165,7 +165,7 @@ namespace EFarmer.pk.Controllers
                 Span = "15 mins ago",
                 Title = "Lorem Ipsum"
             });
-            return PartialView(ads);
+            return PartialView("_AdsListingPartial", ads);
         }
         public IActionResult _LoadAdPartial(int count)
         {
@@ -186,7 +186,7 @@ namespace EFarmer.pk.Controllers
                     Title = "Lorem Ipsum"
                 });
             }
-            return PartialView("_IndexAdsPartial", ads);
+            return PartialView("_AdsListingPartial", ads);
         }
     }
 }
