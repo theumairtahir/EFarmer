@@ -14,6 +14,7 @@ namespace EFarmer.pk.Common
         public static readonly string BLOG_DATE_FORMAT = "MMMM dd, yyyy";
         public static readonly double RADIUS_IN_KM = 25;
         public static readonly double RADIUS_IN_MILES = 25;
+        public static readonly double CONTINOUS_SCROLL_PERCENT = 85;
         static CommonValues()
         {
             //getting connection string from appsettings.json

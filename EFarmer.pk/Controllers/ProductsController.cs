@@ -113,5 +113,211 @@ namespace EFarmer.pk.Controllers
             }
             return PartialView("_AdsListingPartial", ads);
         }
+        public IActionResult ViewFruits()
+        {
+            return View();
+        }
+        public IActionResult GetFruits()
+        {
+            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            return PartialView("_AdsListingPartial", ads);
+        }
+        public IActionResult LoadFruits(int count, int lastIndex)
+        {
+            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            for (int i = 1; i <= count; i++)
+            {
+                ads.Add(new AdViewModel
+                {
+                    Category = "Crops",
+                    Id = 1,
+                    CategoryId = 1,
+                    Location = "Lahore",
+                    Picture = imagePath,
+                    Price = "Rs. 10000",
+                    Rating = 4,
+                    Span = "15 mins ago",
+                    Title = "Lorem Ipsum"
+                });
+            }
+            return PartialView("_AdsListingPartial", ads);
+        }
+        public IActionResult ViewVegetables()
+        {
+            return View();
+        }
+        public IActionResult GetVegetables()
+        {
+            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            ads.Add(new AdViewModel
+            {
+                Category = "Vegetables",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Vegetables",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Vegetables",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Crops",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Vegetables",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            ads.Add(new AdViewModel
+            {
+                Category = "Vegetables",
+                Id = 1,
+                CategoryId = 1,
+                Location = "Lahore",
+                Picture = imagePath,
+                Price = "Rs. 10000",
+                Rating = 4,
+                Span = "15 mins ago",
+                Title = "Lorem Ipsum"
+            });
+            return PartialView("_AdsListingPartial", ads);
+        }
+        public IActionResult LoadVegetables(int count, int lastIndex)
+        {
+            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            for (int i = 1; i <= count; i++)
+            {
+                ads.Add(new AdViewModel
+                {
+                    Category = "Vegetables",
+                    Id = 1,
+                    CategoryId = 1,
+                    Location = "Lahore",
+                    Picture = imagePath,
+                    Price = "Rs. 10000",
+                    Rating = 4,
+                    Span = "15 mins ago",
+                    Title = "Lorem Ipsum"
+                });
+            }
+            return PartialView("_AdsListingPartial", ads);
+        }
     }
 }
