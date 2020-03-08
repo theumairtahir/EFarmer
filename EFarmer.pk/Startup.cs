@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.Extensions.Options;
+using EFarmer.pk.Common;
 
 namespace EFarmer.pk
 {
@@ -94,7 +95,7 @@ namespace EFarmer.pk
                 opts.SupportedCultures = supportedCultures;
                 opts.SupportedUICultures = supportedCultures;
             });
-
+            services.AddMvc(c => c.Conventions.Add(new SwaggerIgnore()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
