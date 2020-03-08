@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EFarmer.Models.Helpers;
+using Microsoft.Extensions.Configuration;
 using System;
 namespace EFarmer.pk.Common
 {
@@ -19,6 +20,7 @@ namespace EFarmer.pk.Common
         public static readonly double CONTINOUS_SCROLL_PERCENT = 85;
         public static readonly string CURRENCY_SYMBOL = "Rs.";
         public static readonly string UPLOADED_PICS_PATH = @"~/uploaded_images/";
+        public static readonly GeoLocation DEFAULT_LOCATION = new GeoLocation { Latitude = 31.478657m, Longitude = 74.287981m };
         static CommonValues()
         {
             //getting connection string from appsettings.json

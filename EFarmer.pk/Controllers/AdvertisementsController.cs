@@ -1,14 +1,28 @@
-﻿using System;
+﻿using Autofac;
+using EFarmer.pk.Models;
+using EFarmer.pk.ViewModels.AdvertisementsViewModels;
+using EFarmerPkModelLibrary.Factories;
+using EFarmerPkModelLibrary.Repositories;
+using ImageUploader;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EFarmer.pk.ViewModels.AdvertisementsViewModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EFarmer.pk.Controllers
 {
     public class AdvertisementsController : Controller
     {
+        private readonly IImageHandler _imageHandler;
+        private readonly IContainer container;
+        private RepositoryFactory repositoryFactory;
+        public AdvertisementsController(IImageHandler imageHandler)
+        {
+            repositoryFactory = new ModelsFactory();
+            container = repositoryFactory.Build();
+            _imageHandler = imageHandler;
+        }
         public IActionResult Details(int id)
         {
             AdDetailsViewModel model = new AdDetailsViewModel
@@ -62,7 +76,7 @@ namespace EFarmer.pk.Controllers
                     Title = "Lorem Ipsum"
                 });
             }
-            return PartialView("_FeaturedAds",model);
+            return PartialView("_FeaturedAds", model);
         }
         public IActionResult GetRecentAds()
         {
@@ -80,6 +94,53 @@ namespace EFarmer.pk.Controllers
                 });
             }
             return PartialView("_RecentAds", model);
+        }
+        public IActionResult PostAd()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostAd(PostAdViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            try
+            {
+                var fileName = await _imageHandler.UploadImage(model.Files.First(), "");
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    using (var adRepository = scope.Resolve<IAdvertisementRepository>())
+                    {
+                        adRepository.Create(new EFarmer.Models.Advertisement
+                        {
+                            City = new EFarmer.Models.City { Id = model.CityId },
+                            Item = new EFarmer.Models.AgroItem { Id = model.ItemId },
+                            Picture = fileName,
+                            PostedDateTime = DateTime.Now,
+                            Price = model.Price,
+                            Quality = model.Quality,
+                            Quantity = model.Quantity,
+                            Seller = new EFarmer.Models.User
+                            {
+                                Address = model.SellerAddress,
+                                ContactNumber = new EFarmer.Models.Helpers.ContactNumberFormat(model.SellerCountryCode, model.SellerComapanyCode, model.SellerNumber),
+                                IsSeller = true,
+                                Location = Common.CommonValues.DEFAULT_LOCATION,
+                                City = new EFarmer.Models.City { Id = model.SellerCity },
+                                Name = new EFarmer.Models.Helpers.NameFormat { FirstName = model.SellerFirstName, LastName = model.SellerLastName }
+                            }
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

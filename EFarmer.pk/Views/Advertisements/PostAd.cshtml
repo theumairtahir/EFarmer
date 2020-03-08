@@ -1,0 +1,329 @@
+﻿@model EFarmer.pk.ViewModels.AdvertisementsViewModels.PostAdViewModel
+@using Autofac
+@{
+    ViewData["Title"] = "Post Ad.";
+    var container = new EFarmer.pk.Models.ModelsFactory().Build();
+    List<SelectListItem> categories = new List<SelectListItem>();
+    List<SelectListItem> cities = new List<SelectListItem>();
+    using (var scope = container.BeginLifetimeScope())
+    {
+        using (var repository = scope.Resolve<EFarmerPkModelLibrary.Repositories.ICategoryRepository>())
+        {
+            foreach (var item in await repository.ReadAllAsync())
+            {
+                categories.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+        }
+        using (var repository = scope.Resolve<EFarmerPkModelLibrary.Repositories.ICityRepository>())
+        {
+            foreach (var item in await repository.ReadAllAsync())
+            {
+                cities.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+        }
+    }
+}
+
+<!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
+<div class="main-content-area clearfix">
+    <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
+    <section class="section-padding  gray ">
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                    <!-- end post-padding -->
+                    <div class="post-ad-form postdetails">
+                        <div class="heading-panel">
+                            <h3 class="main-title text-left">
+                                Post Your Ad
+                            </h3>
+                        </div>
+                        <p class="lead">Posting an ad on <a asp-action="Index" asp-controller="Home">@EFarmer.pk.Common.CommonValues.APP_NAME</a> is free! However, all ads must follow our rules:</p>
+                        <form asp-action="PostAd" method="post" class="submit-form" enctype="multipart/form-data" id="form">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <!-- Category  -->
+                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label class="control-label">Category <small>Select suitable category for your ad</small></label>
+                                    <select id="categories" class="category form-control" asp-items="categories">
+                                        <option label="Select Option"></option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Items  -->
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Item <small>Select Item for your ad</small></label>
+                                    <select asp-for="ItemId" class="category form-control" id="selectItem">
+                                        <option label="Select Option"></option>
+                                    </select>
+                                    <span asp-validation-for="ItemId" class="text-danger"></span>
+                                </div>
+                                <!-- City  -->
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">City <small>Select city for your ad</small></label>
+                                    <select asp-for="CityId" class="category form-control" asp-items="cities">
+                                        <option label="Select Option"></option>
+
+                                    </select>
+                                    <span asp-validation-for="CityId" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <!-- Quantity  -->
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Quantity<small><span id="weight_scale">In Tons</span></small></label>
+                                    <input class="form-control" placeholder="eg 100" type="number" asp-for="Quantity">
+                                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                                </div>
+                                <!-- Price  -->
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Price<small>USD only</small></label>
+                                    <input class="form-control" placeholder="eg Rs.23000" type="number" asp-for="Price">
+                                    <span asp-validation-for="Quality" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <!-- Ad Condition  -->
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label class="control-label">Condition/Qualiity<small>Item Condition/Quality</small></label>
+                                    <div class="skin-minimal">
+                                        <ul class="list">
+                                            <li>
+                                                <input type="radio" id="new" name="minimal-radio" checked asp-for="Quality" value="5">
+                                                <partial name="_RatingPartial" model="5" />
+                                            </li>
+                                            <li>
+                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="4">
+                                                <partial name="_RatingPartial" model="4" />
+                                            </li>
+                                            <li>
+                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="3">
+                                                <partial name="_RatingPartial" model="3" />
+                                            </li>
+                                            <li>
+                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="2">
+                                                <partial name="_RatingPartial" model="2" />
+                                            </li>
+                                            <li>
+                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="1">
+                                                <partial name="_RatingPartial" model="1" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                            <!-- Image Upload  -->
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label class="control-label">Photos for your ad <small>Please add images of your ad.</small></label>
+                                    <input type="file" asp-for="Files" />
+                                    @*<div id="dropzone" class="dropzone"></div>*@
+                                </div>
+                            </div>
+
+
+                            <!-- end row -->
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Your Frist Name</label>
+                                    <input class="form-control" placeholder="eg Aslam" type="text" asp-for="SellerFirstName">
+                                    <span asp-validation-for="SellerFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Your Last Name<small>your caste or surname</small></label>
+                                    <input class="form-control" placeholder="eg chaudhary" type="text" asp-for="SellerLastName">
+                                    <span asp-validation-for="SellerLastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label class="control-label">Mobile Number<small>number for contact</small></label>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="eg +92" type="text" asp-for="SellerCountryCode">
+                                            <span asp-validation-for="SellerCountryCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control" placeholder="eg 321" type="text" asp-for="SellerComapanyCode">
+                                            <span asp-validation-for="SellerComapanyCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" placeholder="eg 1234567" type="text" asp-for="SellerNumber">
+                                            <span asp-validation-for="SellerNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Address<small>your stock address</small></label>
+                                    <input class="form-control" placeholder="eg House no 8 Streent no 2 Lahore" type="text" asp-for="SellerAddress">
+                                    <span asp-validation-for="SellerAddress" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label class="control-label">Your City <small>Leave blank if same as above</small></label>
+                                    <select asp-for="SellerCity" class="category form-control" asp-items="cities">
+                                        <option label="Select Option"></option>
+
+                                    </select>
+                                    <span asp-validation-for="CityId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                            <button class="btn btn-theme pull-right" type="submit" onclick="uploadClicked()">Post My Ad</button>
+                        </form>
+                    </div>
+                    <!-- end post-ad-form-->
+                </div>
+                <!-- end col -->
+                <!-- Right Sidebar -->
+                <div class="col-md-4 col-xs-12 col-sm-12">
+                    <!-- Sidebar Widgets -->
+                    <div class="blog-sidebar">
+                        <!-- Categories -->
+                        <div class="widget">
+                            <div class="widget-heading">
+                                <h4 class="panel-title"><a>Saftey Tips </a></h4>
+                            </div>
+                            <div class="widget-content">
+                                <p class="lead">Posting an ad on <a asp-action="Index" asp-controller="Home">@EFarmer.pk.Common.CommonValues.APP_NAME@EFarmer.pk.Common.CommonValues.APP_NAME_PART</a> is free! However, all ads must follow our rules:</p>
+                                <ol>
+                                    <li>Make sure you post in the correct category.</li>
+                                    <li>Do not post the same ad more than once or repost an ad within 48 hours.</li>
+                                    <li>Do not upload pictures with watermarks.</li>
+                                    <li>Do not post ads containing multiple items unless it's a package deal.</li>
+                                    <li>Do not put your email or phone numbers in the title or description.</li>
+                                    <li>Make sure you post in the correct category.</li>
+                                    <li>Do not post the same ad more than once or repost an ad within 48 hours.</li>
+                                    <li>Do not upload pictures with watermarks.</li>
+                                    <li>Do not post ads containing multiple items unless it's a package deal.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <!-- Latest News -->
+                    </div>
+                    <!-- Sidebar Widgets End -->
+                </div>
+                <!-- Middle Content Area  End --><!-- end col -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Main Container End -->
+    </section>
+    <!-- =-=-=-=-=-=-= Ads Archives End =-=-=-=-=-=-= -->
+</div>
+@section Styles{
+    <!-- =-=-=-=-=-=-= For This Page Only =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="@Url.Content("~/css/dropzone.css")">
+    <link href="@Url.Content("~/css/jquery.tagsinput.min.css")" rel="stylesheet">
+}
+@section scripts{
+    <!-- For this Page Only -->
+    <!-- Ckeditor  -->
+    <script src="@Url.Content("~/js/ckeditor/ckeditor.js")"></script>
+    <!-- Ad Tags  -->
+    <script src="@Url.Content("~/js/jquery.tagsinput.min.js")"></script>
+    <!-- DROPZONE JS  -->
+    <script src="@Url.Content("~/js/dropzone.js")"></script>
+    <script src="@Url.Content("~/js/form-dropzone.js")"></script>
+    <script type="text/javascript">
+        "use strict";
+
+
+        /*--------- create remove function in dropzone --------*/
+        Dropzone.autoDiscover = false;
+        var acceptedFileTypes = "image/*"; //dropzone requires this param be a comma separated list
+        var fileList = new Array;
+        var i = 0;
+        function paramName() {
+            return "files";
+        }
+        $("#dropzone").dropzone({
+            addRemoveLinks: true,
+            maxFiles: 5, //change limit as per your requirements
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            dictMaxFilesExceeded: "Maximum upload limit reached",
+            uploadMultiple: true,
+            paramName: paramName,
+            acceptedFiles: acceptedFileTypes,
+            url: "@Url.Content("PostAd")",
+            dictInvalidFileType: "upload only JPG/PNG",
+            init: function () {
+                // Hack: Add the dropzone class to the element
+                $(this.element).addClass("dropzone");
+            }
+        });
+        (jQuery);
+        function uploadClicked() {
+            var dz = Dropzone.forElement("#dropzone");
+            var form = $("#form").data();
+            var formdata = new FormData($('#form').get(0));
+            var files = [];
+            for (var i = 0; i < dz.files.length; i++) {
+                dz.filesQueue.push(dz.files[i]);
+                files.push(dz.files[i]);
+            }
+            form.append("files", files);
+            dz.processQueue(dz);
+            $('#innerQue').empty();
+        }
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#categories").on("change", function () {
+            var options = '<option label="Select an Item"></option>';
+                if ($(this).val() != 0 || $(this).val() != '0') {
+                    var url='@Url.Action("GetAgroItemsByCategory","Home")/'+ $(this).val();
+                    //var url = "Home/GetAgroItemsByCategory/" + $(this).val();
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: url,
+                        success: function (result) {
+
+                            //$(result).each(function (i, e) {
+                            //    options += '<option value="' + e.id + '">' + e.name + '</option>'
+                            //});
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(result);
+                        },
+                        error: function (error) {
+                            $("#selectItem")
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(options);
+                        }
+                    });
+                }
+                else {
+                    $("#selectItem")
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append(options);
+                }
+        });
+    });
+    </script>
+}

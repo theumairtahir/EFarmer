@@ -1,4 +1,8 @@
 ﻿using EFarmer.Models.Helpers;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFarmer.pk.ViewModels.AdvertisementsViewModels
 {
@@ -45,6 +49,44 @@ namespace EFarmer.pk.ViewModels.AdvertisementsViewModels
         public string PostedDate { get; set; }
         public short CategoryId { get; set; }
         public GeoLocation CityLocation { get; set; }
-        public short CityId { get; set; }   
+        public short CityId { get; set; }
+    }
+    public class PostAdViewModel
+    {
+        [Required]
+        [Display(Name = "Agro Item")]
+        public int ItemId { get; set; }
+        [Required]
+        [Display(Name = "Category")]
+        public short CityId { get; set; }
+        public IEnumerable<IFormFile> Files { get; set; }
+        [Required]
+        [Display(Name = "Quality")]
+        public short Quality { get; set; }
+        [Required]
+        [Display(Name = "Quantity")]
+        public short Quantity { get; set; }
+        [Required]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string SellerFirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string SellerLastName { get; set; }
+        [Required]
+        [StringLength(3, ErrorMessage = "It should be a country code like +92", MinimumLength = 3)]
+        public string SellerCountryCode { get; set; }
+        [Required]
+        [StringLength(3, ErrorMessage = "It should be a company code like 300", MinimumLength = 3)]
+        public string SellerComapanyCode { get; set; }
+        [Required]
+        [StringLength(7, ErrorMessage = "It should be a valid number like 1234567", MinimumLength = 7)]
+        public string SellerNumber { get; set; }
+        [Required]
+        public string SellerAddress { get; set; }
+        [Required]
+        public short SellerCity { get; set; }
     }
 }
