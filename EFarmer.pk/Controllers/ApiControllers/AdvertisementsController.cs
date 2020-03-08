@@ -134,7 +134,7 @@ namespace EFarmer.pk.Controllers.ApiControllers
                 {
                     using (var repository = scope.Resolve<IAdvertisementRepository>())
                     {
-                        advertisements = repository.GetNearbyAdvertisements(null, new EFarmer.Models.Helpers.GeoLocation
+                        advertisements = repository.GetNearbyAdvertisements(new EFarmer.Models.Helpers.GeoLocation
                         {
                             Latitude = latitude,
                             Longitude = longitude

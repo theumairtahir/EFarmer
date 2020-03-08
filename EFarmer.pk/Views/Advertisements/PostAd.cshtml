@@ -35,10 +35,22 @@
 <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
 <div class="main-content-area clearfix">
     <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
-    <section class="section-padding  gray ">
+    <section class="section-padding  pattern-bg">
         <!-- Main Container -->
         <div class="container">
             <!-- Row -->
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12 margin-bottom-10">
+                    <div role="alert" class="alert alert-success alert-dismissible" id="SuccessAlert">
+                        <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                        <strong>Success</strong> The Advertisement has been posted successfully
+                    </div>
+                    <div role="alert" class="alert alert-danger alert-dismissible" id="ErrorAlert">
+                        <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                        <strong>Error</strong> - Advertisement Posting is unsuccessful. Please review your details
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
                     <!-- end post-padding -->
@@ -91,7 +103,7 @@
                                 </div>
                                 <!-- Price  -->
                                 <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label class="control-label">Price<small>USD only</small></label>
+                                    <label class="control-label">Price<small>Rs. only</small></label>
                                     <input class="form-control" placeholder="eg Rs.23000" type="number" asp-for="Price">
                                     <span asp-validation-for="Quality" class="text-danger"></span>
                                 </div>
@@ -99,27 +111,27 @@
                             <!-- Ad Condition  -->
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label class="control-label">Condition/Qualiity<small>Item Condition/Quality</small></label>
+                                    <label class="control-label">Condition/Quality<small>Item Condition/Quality</small></label>
                                     <div class="skin-minimal">
                                         <ul class="list">
                                             <li>
-                                                <input type="radio" id="new" name="minimal-radio" checked asp-for="Quality" value="5">
+                                                <input type="radio" id="new" checked asp-for="Quality" value="5">
                                                 <partial name="_RatingPartial" model="5" />
                                             </li>
                                             <li>
-                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="4">
+                                                <input type="radio" id="new" asp-for="Quality" value="4">
                                                 <partial name="_RatingPartial" model="4" />
                                             </li>
                                             <li>
-                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="3">
+                                                <input type="radio" id="new" asp-for="Quality" value="3">
                                                 <partial name="_RatingPartial" model="3" />
                                             </li>
                                             <li>
-                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="2">
+                                                <input type="radio" id="new" asp-for="Quality" value="2">
                                                 <partial name="_RatingPartial" model="2" />
                                             </li>
                                             <li>
-                                                <input type="radio" id="new" name="minimal-radio" asp-for="Quality" value="1">
+                                                <input type="radio" id="new" asp-for="Quality" value="1">
                                                 <partial name="_RatingPartial" model="1" />
                                             </li>
                                         </ul>
@@ -286,6 +298,8 @@
         }
     </script>
     <script type="text/javascript">
+        $("#SuccessAlert").hide();
+        $("#ErrorAlert").hide();
     $(document).ready(function () {
         $("#categories").on("change", function () {
             var options = '<option label="Select an Item"></option>';
@@ -324,6 +338,16 @@
                         .append(options);
                 }
         });
+        @if(ViewBag.Success!=null){
+            <text>
+                $("#SuccessAlert").fadeIn();
+            </text>
+        }
+        @if(ViewBag.Error!=null){
+            <text>
+                $("#ErrorAlert").fadeIn();
+            </text>
+        }
     });
     </script>
 }

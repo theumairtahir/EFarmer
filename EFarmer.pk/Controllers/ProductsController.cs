@@ -2,114 +2,112 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using EFarmer.pk.Models;
 using EFarmer.pk.ViewModels.HomeViewModels;
+using EFarmerPkModelLibrary.Factories;
+using EFarmerPkModelLibrary.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFarmer.pk.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly IContainer container;
+        private readonly RepositoryFactory repositoryFactory;
+        public ProductsController()
+        {
+            repositoryFactory = new ModelsFactory();
+            container = repositoryFactory.Build();
+        }
         [Route("/Products/Crops")]
         public IActionResult ViewCrops()
         {
             return View();
         }
-        public IActionResult GetCrops()
+        public async Task<IActionResult> GetCrops()
         {
-            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("crops"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.CROP_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadCrops(int count, int lastIndex)
+        public async Task<IActionResult> LoadCrops(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Crops",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("crops"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.CROP_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
@@ -118,410 +116,357 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
-        public IActionResult GetFruits()
+        public async Task<IActionResult> GetFruits()
         {
-            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            return PartialView("_AdsListingPartial", ads);
-        }
-        public IActionResult LoadFruits(int count, int lastIndex)
-        {
-            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
-            List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
-            {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Crops",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fruits"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.FRUIT_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
+        }
+        public async Task<IActionResult> LoadFruits(int count, int lastIndex)
+        {
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
+            List<AdViewModel> ads = new List<AdViewModel>();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fruits"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.FRUIT_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
+            return PartialView("_AdsListingPartial", ads);
+
         }
         [Route("/Products/Vegetabes")]
         public IActionResult ViewVegetables()
         {
             return View();
         }
-        public IActionResult GetVegetables()
+        public async Task<IActionResult> GetVegetables()
         {
-            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("vegetables"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.VEG_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadVegetables(int count, int lastIndex)
+        public async Task<IActionResult> LoadVegetables(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Vegetables",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("vegetables"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.VEG_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
         [Route("/Product/Pesticides")]
         public IActionResult ViewPesticides() => View();
-        public IActionResult GetPesticides()
+        public async Task<IActionResult> GetPesticides()
         {
-            var imagePath = Common.CommonValues.PEST_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Pesticides",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("pesticides"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.PEST_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadPesticides(int count, int lastIndex)
+        public async Task<IActionResult> LoadPesticides(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.PEST_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Pesticides",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("pesticides"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.PEST_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
         [Route("/Products/Fertilizers")]
         public IActionResult ViewFertilizers() => View();
-        public IActionResult GetFertilizers()
+        public async Task<IActionResult> GetFertilizers()
         {
-            var imagePath = Common.CommonValues.FERTILIZER_DEFAULT_PIC;
-            List<AdViewModel> ads = new List<AdViewModel>
+            List<AdViewModel> ads = new List<AdViewModel>();
+            using (var scope = container.BeginLifetimeScope())
             {
-                new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                },
-                new AdViewModel
-                {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                },
-                new AdViewModel
-                {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                },
-                new AdViewModel
-                {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                },
-                new AdViewModel
-                {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                },
-                new AdViewModel
-                {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fertilizers"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
                 }
-            };
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadFertilizers(int count, int lastIndex)
+        public async Task<IActionResult> LoadFertilizers(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Fertilizers",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fertilizers"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
@@ -530,102 +475,89 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
-        public IActionResult GetCropsSeeds()
+        public async Task<IActionResult> GetCropsSeeds()
         {
-            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Crops Seeds",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("crop seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadCropsSeeds(int count, int lastIndex)
+        public async Task<IActionResult> LoadCropsSeeds(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.CROP_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Crops",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("crop seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
@@ -634,102 +566,89 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
-        public IActionResult GetFruitsSeeds()
+        public async Task<IActionResult> GetFruitsSeeds()
         {
-            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fruit seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadFruitsSeeds(int count, int lastIndex)
+        public async Task<IActionResult> LoadFruitsSeeds(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.FRUIT_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Crops",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("fruit seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }
@@ -738,102 +657,89 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
-        public IActionResult GetVegetablesSeeds()
+        public async Task<IActionResult> GetVegetablesSeeds()
         {
-            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
             List<AdViewModel> ads = new List<AdViewModel>();
-            ads.Add(new AdViewModel
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Crops",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
-            ads.Add(new AdViewModel
-            {
-                Category = "Vegetables",
-                Id = 1,
-                CategoryId = 1,
-                Location = "Lahore",
-                Picture = imagePath,
-                Price = "Rs. 10000",
-                Rating = 4,
-                Span = "15 mins ago",
-                Title = "Lorem Ipsum"
-            });
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
+                {
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("vegetable seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, 1, 6))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
+            }
             return PartialView("_AdsListingPartial", ads);
         }
-        public IActionResult LoadVegetablesSeeds(int count, int lastIndex)
+        public async Task<IActionResult> LoadVegetablesSeeds(int count, int lastIndex)
         {
-            var imagePath = Common.CommonValues.VEG_DEFAULT_PIC;
+            int startRow = lastIndex + 1;
+            int endRow = startRow + count;
             List<AdViewModel> ads = new List<AdViewModel>();
-            for (int i = 1; i <= count; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                ads.Add(new AdViewModel
+                short categoryId = 0;
+                using (var categoryRepo = scope.Resolve<ICategoryRepository>())
                 {
-                    Category = "Vegetables",
-                    Id = 1,
-                    CategoryId = 1,
-                    Location = "Lahore",
-                    Picture = imagePath,
-                    Price = "Rs. 10000",
-                    Rating = 4,
-                    Span = "15 mins ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in await categoryRepo.ReadAllAsync())
+                    {
+                        if (item.Name.ToLower().Contains("vegetable seeds"))
+                        {
+                            categoryId = item.Id;
+                        }
+                    }
+                }
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
+                {
+                    foreach (var item in await adsRepository.GetAdvertisementsByCategoryAsync(new EFarmer.Models.Category { Id = categoryId }, startRow, endRow))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        ads.Add(new AdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                 || string.IsNullOrWhiteSpace(item.Picture))
+                                 ? defaultPic
+                                 : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Rating = item.Quality,
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = Common.CommonFunctions.GetAdTitle(item.Seller.Name.ToString(), item.Item.Name, item.City.Name)
+                        });
+                    }
+                }
             }
             return PartialView("_AdsListingPartial", ads);
         }

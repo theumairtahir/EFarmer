@@ -16,38 +16,73 @@ namespace EFarmer.pk.Controllers
     {
         private readonly IImageHandler _imageHandler;
         private readonly IContainer container;
-        private RepositoryFactory repositoryFactory;
+        private readonly RepositoryFactory repositoryFactory;
         public AdvertisementsController(IImageHandler imageHandler)
         {
             repositoryFactory = new ModelsFactory();
             container = repositoryFactory.Build();
             _imageHandler = imageHandler;
         }
-        public IActionResult Details(int id)
+        public IActionResult Details(long id)
         {
-            AdDetailsViewModel model = new AdDetailsViewModel
+            AdDetailsViewModel model = new AdDetailsViewModel();
+            using (var scope = container.BeginLifetimeScope())
             {
-                Category = "Crops",
-                CategoryId = 1,
-                CityId = 1,
-                CityLocation = new EFarmer.Models.Helpers.GeoLocation { Latitude = 31.518934m, Longitude = 74.394765m },
-                Id = 1,
-                Location = "Lahore",
-                Picture = Common.CommonValues.UPLOADED_PICS_PATH + Common.CommonValues.CROP_DEFAULT_PIC,
-                PostedDate = DateTime.Now.ToString("dd MMMM yy"),
-                Price = Common.CommonValues.CURRENCY_SYMBOL + " " + 1000,
-                Quality = 3,
-                Quantity = 100,
-                SellerMobileNumber = "0300-1234567",
-                Title = "Lorem Ipsum",
-                _UserInfo = new UserInfoViewModel
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
                 {
-                    DatePosted = DateTime.Now.ToString("dd MMMM yy"),
-                    Id = 1,
-                    Name = "Umair Tahir",
-                    Picture = ""
+                    var ad = adsRepository.Read(id);
+                    var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                    if (ad.Item.Category.Name.Contains("Crops"))
+                    {
+                        defaultPic += Common.CommonValues.CROP_DEFAULT_PIC;
+                    }
+                    else if (ad.Item.Category.Name.Contains("Fruits"))
+                    {
+                        defaultPic += Common.CommonValues.FRUIT_DEFAULT_PIC;
+                    }
+                    else if (ad.Item.Category.Name.Contains("Vegetables"))
+                    {
+                        defaultPic += Common.CommonValues.VEG_DEFAULT_PIC;
+                    }
+                    else if (ad.Item.Category.Name.Contains("Pesticides"))
+                    {
+                        defaultPic += Common.CommonValues.PEST_DEFAULT_PIC;
+                    }
+                    else if (ad.Item.Category.Name.Contains("Fertilizers"))
+                    {
+                        defaultPic += Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+                    }
+                    else if (ad.Item.Name.Contains("Seeds"))
+                    {
+                        defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                    }
+                    model = new AdDetailsViewModel
+                    {
+                        Category = ad.Item.Category.Name,
+                        CategoryId = ad.Item.Category.Id,
+                        CityId = ad.City.Id,
+                        CityLocation = ad.City.GeoLocation,
+                        Id = ad.Id,
+                        Location = ad.City.Name,
+                        Picture = (string.IsNullOrEmpty(ad.Picture)
+                                    || string.IsNullOrWhiteSpace(ad.Picture)) ? defaultPic
+                                                                              : Common.CommonValues.UPLOADED_PICS_PATH + ad.Picture,
+                        PostedDate = ad.PostedDateTime.ToString(Common.CommonValues.LONG_DATE_FORMAT),
+                        Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(ad.Price, 2),
+                        Quality = ad.Quality,
+                        Quantity = ad.Quantity,
+                        SellerMobileNumber = ad.Seller.ContactNumber.LocalFormatedPhoneNumber,
+                        Title = ad.Seller.Name.ToString() + " is selling " + ad.Item.Name + " in " + ad.City.Name,
+                        _UserInfo = new UserInfoViewModel
+                        {
+                            DatePosted = Common.CommonFunctions.GetPassedDateSpanFromNow(ad.PostedDateTime),
+                            Name = ad.Seller.Name.ToString(),
+                            Id = ad.Seller.Id,
+                            Picture = Common.CommonValues.PROFILE_IMAGES_PATH + Common.CommonValues.DEFAULT_PROFILE_IMAGE
+                        }
+                    };
                 }
-            };
+            }
             return View(model);
         }
         public IActionResult GetAdsByCategory(short id)
@@ -58,40 +93,107 @@ namespace EFarmer.pk.Controllers
         {
             return View();
         }
-        public IActionResult GetFeaturedAds()
+        public async Task<IActionResult> GetFeaturedAds()
         {
             List<FeaturedAdViewModel> model = new List<FeaturedAdViewModel>();
-            for (int i = 0; i < 5; i++)
+
+            using (var scope = container.BeginLifetimeScope())
             {
-                model.Add(new FeaturedAdViewModel
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
                 {
-                    Category = "Crops",
-                    CategoryId = 1,
-                    Id = 1,
-                    IsNegotiable = false,
-                    Location = "Lahore",
-                    Picture = Common.CommonValues.UPLOADED_PICS_PATH + Common.CommonValues.CROP_DEFAULT_PIC,
-                    Price = Common.CommonValues.CURRENCY_SYMBOL + 10000,
-                    Span = "15 min ago",
-                    Title = "Lorem Ipsum"
-                });
+                    foreach (var item in (await adsRepository.ReadAllAsync()).OrderByDescending(x => x.PostedDateTime).Take(5))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        if (item.Item.Category.Name.Contains("Crops"))
+                        {
+                            defaultPic += Common.CommonValues.CROP_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Fruits"))
+                        {
+                            defaultPic += Common.CommonValues.FRUIT_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Vegetables"))
+                        {
+                            defaultPic += Common.CommonValues.VEG_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Pesticides"))
+                        {
+                            defaultPic += Common.CommonValues.PEST_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Fertilizers"))
+                        {
+                            defaultPic += Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Name.Contains("Seeds"))
+                        {
+                            defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        }
+                        model.Add(new FeaturedAdViewModel
+                        {
+                            Category = item.Item.Category.Name,
+                            CategoryId = item.Item.Category.Id,
+                            Id = item.Id,
+                            IsNegotiable = false,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                       || string.IsNullOrWhiteSpace(item.Picture)) ? defaultPic
+                                                                                   : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + " " + decimal.Round(item.Price, 2),
+                            Span = Common.CommonFunctions.GetPassedTimeSpanFromNow(item.PostedDateTime),
+                            Title = item.Seller.Name.ToString() + " is selling " + item.Item.Name + " in " + item.City.Name
+                        });
+                    }
+                }
             }
             return PartialView("_FeaturedAds", model);
         }
-        public IActionResult GetRecentAds()
+        public async Task<IActionResult> GetRecentAds()
         {
             List<RecentAdsViewModel> model = new List<RecentAdsViewModel>();
-            for (int i = 0; i < 5; i++)
+            using (var scope = container.BeginLifetimeScope())
             {
-                model.Add(new RecentAdsViewModel
+                using (var adsRepository = scope.Resolve<IAdvertisementRepository>())
                 {
-                    CityId = 1,
-                    Title = "Lorem Ipsum",
-                    Id = 1,
-                    Location = "Lahore",
-                    Picture = Common.CommonValues.UPLOADED_PICS_PATH + Common.CommonValues.VEG_DEFAULT_PIC,
-                    Price = Common.CommonValues.CURRENCY_SYMBOL + "10000"
-                });
+                    foreach (var item in (await adsRepository.ReadAllAsync()).OrderByDescending(x => x.PostedDateTime).Take(5))
+                    {
+                        var defaultPic = Common.CommonValues.UPLOADED_PICS_PATH;
+                        if (item.Item.Category.Name.Contains("Crops"))
+                        {
+                            defaultPic += Common.CommonValues.CROP_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Fruits"))
+                        {
+                            defaultPic += Common.CommonValues.FRUIT_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Vegetables"))
+                        {
+                            defaultPic += Common.CommonValues.VEG_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Pesticides"))
+                        {
+                            defaultPic += Common.CommonValues.PEST_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Category.Name.Contains("Fertilizers"))
+                        {
+                            defaultPic += Common.CommonValues.FERTILIZER_DEFAULT_PIC;
+                        }
+                        else if (item.Item.Name.Contains("Seeds"))
+                        {
+                            defaultPic += Common.CommonValues.SEEDS_DEFAULT_PIC;
+                        }
+                        model.Add(new RecentAdsViewModel
+                        {
+                            Title = item.Seller.Name.ToString() + " is selling " + item.Item.Name + " in " + item.City.Name,
+                            CityId = item.City.Id,
+                            Id = item.Id,
+                            Location = item.City.Name,
+                            Picture = (string.IsNullOrEmpty(item.Picture)
+                                       || string.IsNullOrWhiteSpace(item.Picture)) ? defaultPic
+                                                                                   : Common.CommonValues.UPLOADED_PICS_PATH + item.Picture,
+                            Price = Common.CommonValues.CURRENCY_SYMBOL + decimal.Round(item.Price, 2)
+                        });
+                    }
+                }
             }
             return PartialView("_RecentAds", model);
         }
@@ -105,11 +207,16 @@ namespace EFarmer.pk.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Error = true;
                 return View();
             }
             try
             {
-                var fileName = await _imageHandler.UploadImage(model.Files.First(), "");
+                var fileName = string.Empty;
+                if (model.Files.Count() > 0)
+                {
+                    fileName = await _imageHandler.UploadImage(model.Files.First(), "");
+                }
                 using (var scope = container.BeginLifetimeScope())
                 {
                     using (var adRepository = scope.Resolve<IAdvertisementRepository>())
@@ -129,18 +236,21 @@ namespace EFarmer.pk.Controllers
                                 ContactNumber = new EFarmer.Models.Helpers.ContactNumberFormat(model.SellerCountryCode, model.SellerComapanyCode, model.SellerNumber),
                                 IsSeller = true,
                                 Location = Common.CommonValues.DEFAULT_LOCATION,
-                                City = new EFarmer.Models.City { Id = model.SellerCity },
+                                City = (model.SellerCity <= 0) 
+                                        ? new EFarmer.Models.City { Id = model.CityId } 
+                                        : new EFarmer.Models.City { Id = model.SellerCity },
                                 Name = new EFarmer.Models.Helpers.NameFormat { FirstName = model.SellerFirstName, LastName = model.SellerLastName }
                             }
                         });
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return RedirectToAction("Error", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            ViewBag.Success = true;
+            return View();
         }
     }
 }

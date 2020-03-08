@@ -10,6 +10,7 @@ namespace EFarmer.pk.Common
         public static readonly string APP_NAME_PART = ".pk";
         //public static readonly string CONNECTION_STRING;
         public static readonly string CROP_DEFAULT_PIC = "agri_crop.jpg";
+        public static readonly string SEEDS_DEFAULT_PIC = "agri_seed.jpg";
         public static readonly string VEG_DEFAULT_PIC = "agri_veg.jpg";
         public static readonly string FRUIT_DEFAULT_PIC = "agri_fruit.jpg";
         public static readonly string FERTILIZER_DEFAULT_PIC = "agri_fertilizer.jpg";
@@ -20,6 +21,9 @@ namespace EFarmer.pk.Common
         public static readonly double CONTINOUS_SCROLL_PERCENT = 85;
         public static readonly string CURRENCY_SYMBOL = "Rs.";
         public static readonly string UPLOADED_PICS_PATH = @"~/uploaded_images/";
+        public static readonly string PROFILE_IMAGES_PATH = @"~/images/profile-images/";
+        public static readonly string DEFAULT_PROFILE_IMAGE = "profile.jpg";
+        public static readonly string LONG_DATE_FORMAT = "dd MMMM, yy";
         public static readonly GeoLocation DEFAULT_LOCATION = new GeoLocation { Latitude = 31.478657m, Longitude = 74.287981m };
         static CommonValues()
         {
