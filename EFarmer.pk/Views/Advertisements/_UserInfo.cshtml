@@ -1,0 +1,15 @@
+﻿@model EFarmer.pk.ViewModels.AdvertisementsViewModels.UserInfoViewModel
+
+<div class="user-info-card">
+    @*<div class="user-photo col-md-4 col-sm-3  col-xs-4">
+        <img src="~/images/users/3.jpg" alt="">
+    </div>*@
+    <div class="user-information col-md-12 col-sm-12 col-xs-12">
+        <span class="user-name"><a class="hover-color" href="profile.html">@Model.Name</a></span>
+        <div class="item-date">
+            <span class="ad-pub">Published on: @Model.DatePosted</span><br>
+            @*<a asp-action="GetPostedAdsByUser" class="link">More Ads</a>*@
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

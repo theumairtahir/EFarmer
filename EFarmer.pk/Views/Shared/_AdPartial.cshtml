@@ -12,23 +12,12 @@
             <div class="category-title"> <span><a href="@Url.Action("Index","Categories", new { id=Model.CategoryId})">@Model.Category</a></span> </div>
             <!-- Ad Title -->
             <h3>
-                <a title="" href="@Url.Action("Details", "Items", new { id=Model.Id})">@Model.Title</a>
+                <a title="@Model.Title" asp-action="Details" asp-controller="Advertisements" asp-route-id="@Model.Id">@Model.Title</a>
             </h3>
             <!-- Location -->
             <p class="location"><i class="fa fa-map-marker"></i>@Model.Location</p>
             <!-- Rating -->
-            <div class="rating">
-                @for (int i = 1; i <= Model.Rating; i++)
-                {
-                    <i class="fa fa-star"></i>
-                }
-                @for (int i = 1; i <= (5 - Model.Rating); i++)
-                {
-                    <i class="fa fa-star-o"></i>
-                }
-                @*<span class="rating-count">(2)</span>*@
-
-            </div>
+            <partial name="_RatingPartial" model="Model.Rating" />
             <!-- Price -->
             <span class="ad-price">@Model.Price</span>
         </div>

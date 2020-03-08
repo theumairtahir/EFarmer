@@ -17,6 +17,8 @@ namespace EFarmer.pk.Common
         public static readonly double RADIUS_IN_KM = 25;
         public static readonly double RADIUS_IN_MILES = 25;
         public static readonly double CONTINOUS_SCROLL_PERCENT = 85;
+        public static readonly string CURRENCY_SYMBOL = "Rs.";
+        public static readonly string UPLOADED_PICS_PATH = @"~/uploaded_images/";
         static CommonValues()
         {
             //getting connection string from appsettings.json

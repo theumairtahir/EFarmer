@@ -1,0 +1,248 @@
+﻿@model EFarmer.pk.ViewModels.AdvertisementsViewModels.AdDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    var currentPath = Context.Request.Host + Context.Request.Path;
+}
+
+<div class="main-content-area clearfix">
+    <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
+    <section class="section-padding error-page pattern-bgs gray ">
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <!-- Middle Content Area -->
+                <div class="col-md-8 col-xs-12 col-sm-12">
+                    <!-- Single Ad -->
+                    <div class="single-ad">
+                        <!-- Ad Slider -->
+                        @*<div class="owl-carousel owl-theme single-details">
+                                <!-- Slide -->
+                                <div class="item"><img src="@Url.Content(Model.Picture)" alt="@(Model.Title+"_Img")"></div>
+                                <!-- Slide -->
+                                <div class="item"><img src="~/images/single-page/8.jpg" alt=""></div>
+                                <!-- Slide -->
+                                <div class="item"><img src="~/images/single-page/9.jpg" alt=""></div>
+                                <!-- Slide -->
+                                <div class="item"><img src="~/images/single-page/10.jpg" alt=""></div>
+                            </div>*@
+                        <img src="@Url.Content(Model.Picture)" alt="@(Model.Title+"_Img")" class="img-responsive">
+                        <!-- Short Description  -->
+                        <div class="ad-box">
+                            <div class="ad-title clearfix">
+                                <h2><a href="#">@Model.Title</a> </h2>
+                            </div>
+                            <div class="short-features">
+                                <!-- Heading Area -->
+                                <div class="heading-panel">
+                                    <h3 class="main-title text-left">
+                                        Description
+                                    </h3>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xs-12 no-padding">
+                                    <span><strong>Quantity</strong> :</span> @(decimal.Round(Model.Quantity, 2))
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xs-12 no-padding">
+                                    <span><strong>Quality</strong> :</span> <partial name="_RatingPartial" model="Model.Quality" />
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xs-12 no-padding">
+                                    <span><strong>Price</strong> :</span> @Model.Price
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- Heading Area -->
+                            <div class="heading-panel">
+                                <h3 class="main-title text-left">
+                                    Location
+                                </h3>
+                            </div>
+                            <div id="itemMap"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- Share Ad  -->
+                        <div class="ad-share text-center">
+                            <div data-toggle="modal" data-target=".share-ad" class="ad-box col-md-6 col-sm-6 col-xs-12">
+                                <i class="fa fa-share-alt"></i> <span class="hidetext">Share</span>
+                            </div>
+                            <a class="ad-box col-md-6 col-sm-6 col-xs-12" href="#"><i class="fa fa-star active"></i> <span class="hidetext">Add to watchlist</span></a>
+                            @*<div data-target=".report-quote" data-toggle="modal" class="ad-box col-md-4 col-sm-4 col-xs-12">
+                                    <i class="fa fa-warning"></i> <span class="hidetext">Report</span>
+                                </div>*@
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- Single Ad End -->
+                </div>
+                <!-- Right Sidebar -->
+                <div class="col-md-4 col-xs-12 col-sm-12">
+                    <!-- Sidebar Widgets -->
+                    <div class="sidebar">
+                        <!-- Contact info -->
+                        <div class="contact white-bg">
+                            <!-- Email Button trigger modal -->
+                            @*<button class="btn-block btn-contact contactEmail" data-toggle="modal" data-target=".price-quote">Contact Seller Via Email</button>*@
+                            <!-- Email Modal -->
+                            <button class="btn-block btn-contact contactPhone number">@Model.SellerMobileNumber</button>
+                        </div>
+                        <!-- Price info block -->
+                        <div class="ad-listing-price">
+                            <p>@Model.Price</p>
+                        </div>
+                        <!-- User Info -->
+                        <div class="white-bg user-contact-info">
+                            <partial name="_UserInfo" model="Model._UserInfo" />
+                            <div class="ad-listing-meta">
+                                <ul>
+                                    <li>Category: <span class="color">@Model.Category</span></li>
+                                    <li>Location: <span class="color">@Model.Location</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="FeaturedAds"></div>
+
+                        <!-- Recent Ads -->
+                        <div id="RecentAds"></div>
+                        <!-- Saftey Tips  -->
+                        <div class="widget">
+                            <div class="widget-heading">
+                                <h4 class="panel-title"><a>Safety tips for deal</a></h4>
+                            </div>
+                            <div class="widget-content saftey">
+                                <ol>
+                                    <li>Use a safe location to meet seller</li>
+                                    <li>Avoid cash transactions</li>
+                                    <li>Beware of unrealistic offers</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar Widgets End -->
+                </div>
+                <!-- Middle Content Area  End -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Main Container End -->
+    </section>
+    <!-- =-=-=-=-=-=-= Ads Archives End =-=-=-=-=-=-= -->
+</div>
+<!-- =-=-=-=-=-=-= Ad Detail Modal =-=-=-=-=-=-= -->
+<div class="sticky-ad-detail">
+    <div class="container">
+        <div class="col-md-7 col-sm-12 col-xs-12 no-padding">
+            <div class="">
+                <h3>@Model.Title</h3>
+                <div class="short-history">
+                    <ul>
+                        <li>Posted on: <b>@Model.PostedDate</b></li>
+                        <li>Location: <b>@Model.Location</b></li>
+                        <li>Category: <b><a asp-action="GetAdsByCategory" asp-route-id="@Model.CategoryId">@Model.Category</a></b></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5  col-sm-12 col-xs-12 no-padding">
+            <div class="pull-right row">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <a href="javascript:void(0)" class="btn btn-block pull-left btn-phone number "><i class="fa fa-phone"></i> @Model.SellerMobileNumber</a>
+                </div>
+                @*<div class="col-md-6 col-sm-6 col-xs-12">
+                        <a data-toggle="modal" data-target=".price-quote" href="javascript:void(0)" class="btn btn-block pull-left btn-message"><i class="icon-envelope"></i> Message Seller</a>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- =-=-=-=-=-=-= Share Modal =-=-=-=-=-=-= -->
+<div class="modal fade share-ad" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">Share</h3>
+            </div>
+            <div class="modal-body">
+                <div class="recent-ads">
+                    <div class="recent-ads-list">
+                        <div class="recent-ads-container">
+                            <div class="recent-ads-list-image">
+                                <a href="#" class="recent-ads-list-image-inner">
+                                    <img src="@Url.Content(Model.Picture)" alt="">
+                                </a><!-- /.recent-ads-list-image-inner -->
+                            </div>
+                            <!-- /.recent-ads-list-image -->
+                            <div class="recent-ads-list-content">
+                                <h3 class="recent-ads-list-title">
+                                    <a href="#">@Model.Title</a>
+                                </h3>
+                                <ul class="recent-ads-list-location">
+                                    <li><a asp-action="GetAdvertisementsByCity" asp-route-id="@Model.CityId">@Model.Location</a>
+                                </ul>
+                                <div class="recent-ads-list-price">
+                                    @Model.Price
+                                </div>
+                                <!-- /.recent-ads-list-price -->
+                            </div>
+                            <!-- /.recent-ads-list-content -->
+                        </div>
+                        <!-- /.recent-ads-container -->
+                    </div>
+                </div>
+                @*<h3>Key Features</h3>
+                    <p>Alarm, Alloy Wheels, Anti-Lock Brakes, Automatic Air Conditioning, Bluetooth Interface Telephone Equipment, Body Coloured Bumpers, Centre Console, Centre Rear Seat Belt, Cloth interior, Cruise Control, Driver Information System</p>*@
+                <h3>Link</h3>
+                <p><a href="@("https://"+currentPath)">@currentPath</a></p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-fb btn-md"><i class="fa fa-facebook"></i></a>
+                <a class="btn btn-twitter btn-md"><i class="fa fa-twitter"></i></a>
+                <a class="btn btn-gplus btn-md"><i class="fa fa-google-plus"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <!-- For Google Map -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9T637lzXkuTe7q2Vy_1fIo3azZzDhHwM&sensor=false"></script>
+    <script type="text/javascript">
+        (function ($) {
+            /* ======= Ad Location ======= */
+            var map = "";
+            var latlng = new google.maps.LatLng(@Model.CityLocation.Latitude, @Model.CityLocation.Longitude);
+            var myOptions = {
+                zoom: 13,
+                center: latlng,
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                size: new google.maps.Size(480, 240)
+            }
+            map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng
+            });
+            /* ======= Ad Detail On Scroll ======= */
+            //caches a jQuery object containing the header element
+            var header = $(".sticky-ad-detail");
+            $(window).scroll(function () {
+                var scroll = $(window).scrollTop();
+                if (scroll >= 500) {
+                    header.addClass("show-sticky-ad-detail");
+                } else {
+                    header.removeClass("show-sticky-ad-detail");
+                }
+            });
+        })(jQuery);
+    </script>
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                $.get('@Url.Action("GetRecentAds")', function (content) {
+                    $("#RecentAds").fadeOut();
+                    $("#RecentAds").html(content);
+                    $("#RecentAds").fadeIn();
+                });
+            }, 20000);
+        });
+    </script>
+}

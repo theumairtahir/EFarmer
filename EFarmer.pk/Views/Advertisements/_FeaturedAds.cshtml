@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EFarmer.pk.ViewModels.AdvertisementsViewModels.FeaturedAdViewModel>
+<!-- Featured Ads -->
+@**@<div class="widget">
+    <div class="widget-heading">
+        <h4 class="panel-title"><a>Featured Ads</a></h4>
+    </div>
+    <div class="widget-content">
+        <div class="featured-slider-3">
+            @foreach (var item in Model)
+            {
+                <!-- Featured Ads -->
+                <div class="item">
+                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <!-- Ad Box -->
+                        <div class="category-grid-box">
+                            <!-- Ad Img -->
+                            <div class="category-grid-img">
+                                <img class="img-responsive" alt="" src="@Url.Content(item.Picture)">
+                                <!-- Ad Status -->
+                                <!-- View Details --><a asp-action="Details" asp-controller="Advertisements" asp-route-id="@item.Id" class="view-details">View Details</a>
+                            </div>
+                            <!-- Ad Img End -->
+                            <div class="short-description">
+                                <!-- Ad Category -->
+                                <div class="category-title"> <span><a asp-action="GetAdsByCategory" asp-controller="Advertisements" asp-route-id="@item.CategoryId">@item.Category</a></span> </div>
+                                <!-- Ad Title -->
+                                <h3><a title="" asp-action="Details" asp-controller="Advertisements" asp-route-id="@item.Id">@item.Title</a></h3>
+                                <!-- Price -->
+                                <div class="price">
+                                    @item.Price
+                                    @if (item.IsNegotiable)
+                                    {
+                                        <span class="negotiable">(Negotiable)</span>
+                                    }
+                                </div>
+                            </div>
+                            <!-- Addition Info -->
+                            <div class="ad-info">
+                                <ul>
+                                    <li><i class="fa fa-map-marker"></i>@item.Location</li>
+                                    <li><i class="fa fa-clock-o"></i>@item.Span</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Ad Box End -->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
