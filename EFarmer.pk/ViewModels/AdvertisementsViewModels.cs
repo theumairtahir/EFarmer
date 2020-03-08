@@ -86,7 +86,6 @@ namespace EFarmer.pk.ViewModels.AdvertisementsViewModels
         public string SellerNumber { get; set; }
         [Required]
         public string SellerAddress { get; set; }
-        [Required]
         public short SellerCity { get; set; }
     }
 }

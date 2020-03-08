@@ -51,6 +51,7 @@
 
 @section scripts{
     <script type="text/javascript">
+        var lastIndex = 0;
         $(document).ready(function () {
             $("#selectCategory").change(function () {
                 var options = '<option label="Select an Item"></option>';
@@ -97,11 +98,12 @@
                 else if ($(window).width() < 1024) {
                     count = 2;
                 }
-                $.get('@Url.Action("_LoadAdPartial", "Home")', { count: count }, function (content) {
+                $.get('@Url.Action("_LoadAdPartial", "Home")', { count: count, lastIndex: lastIndex }, function (content) {
                     if (content == "\r\n" || content == "") {
                         $("#loadAds").hide();
                     }
-                   $("#ads").append(content);
+                    $("#ads").append(content);
+                    lastIndex += count;
                 });
             });
         });
@@ -109,6 +111,7 @@
     <script>
         $.get('@Url.Action("_IndexAdsPartial", "Home")', function (content) {
             $("#ads").append(content);
+            lastIndex += 6;
         });
     </script>
 

@@ -11,8 +11,10 @@ namespace EFarmer.pk.Common
             FileInfo file = new FileInfo(path);
             using (MagickImage image = new MagickImage(file))
             {
-                image.Resize(1280, 720);
+                image.Resize(720, 0);
                 image.Quality = 50;
+                image.Crop(720, 550);
+                image.Scale(720, 550);
                 image.Write(file);
             }
         }

@@ -252,5 +252,17 @@ namespace EFarmer.pk.Controllers
             ViewBag.Success = true;
             return View();
         }
+        public IActionResult GetWeightScale(int id)
+        {
+            var scale = "";
+            using (var scope=container.BeginLifetimeScope())
+            {
+                using (var repository=scope.Resolve<IAgroItemRepository>())
+                {
+                    scale = repository.Read(id).WeightScale;
+                }
+            }
+            return Content(scale);
+        }
     }
 }
