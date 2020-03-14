@@ -4,7 +4,7 @@
     <div class="white category-grid-box-1 clearfix">
         <!-- Image Box -->
         <div class="image">
-            <img alt="@(Model.Title+"'s Image")" src="@Url.Content(Model.Picture)" class="img-responsive">
+            <img alt="@(Model.Title+"'s Image")" src="@Url.Content(Model.Picture)" class="img-responsive" style="height:350px">
         </div>
         <!-- Short Description -->
         <div class="short-description-1 clearfix">
@@ -16,10 +16,13 @@
             </h3>
             <!-- Location -->
             <p class="location"><i class="fa fa-map-marker"></i>@Model.Location</p>
-            <!-- Rating -->
-            <partial name="_RatingPartial" model="Model.Rating" />
-            <!-- Price -->
-            <span class="ad-price">@Model.Price</span>
+            <div style="bottom:0; line-height:1rem;">
+                <!-- Rating -->
+                <partial name="_RatingPartial" model="Model.Rating" />
+                <!-- Price -->
+                <span class="ad-price pull-right">@Model.Price</span>
+            </div>
+            
         </div>
         <!-- Ad Meta Stats -->
         <div class="ad-info-1">

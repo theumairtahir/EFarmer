@@ -21,9 +21,11 @@
                 <div class="col-md-12 col-xs-12 col-sm-12">
                     <!-- Row -->
                     <div class="row">
+                        <div id="loader1" class="col-md-4 col-md-offset-4"><img class="img-responsive" src="@Url.Content("~/images/Loader.gif")" /></div>
                         <div id="adLoadFirst"></div>
                         <partial name="_Advertizing" />
                         <div id="ads"></div>
+                        <div id="loader2" class="col-md-2 col-md-offset-5"><img class="img-responsive" src="@Url.Content("~/images/Loader.gif")" /></div>
                     </div>
                 </div>
                 <!-- Middle Content Box End -->
@@ -40,9 +42,11 @@
         var processing = false;
         var lastIndex = 0;
         $(document).ready(function () {
+            $("#loader2").hide();
             $.get('@Url.Action("GetCrops", "Products")', function (content) {
                 $("#adLoadFirst").append(content);
                 lastIndex = 6;
+                $("#loader1").hide();
             });
         });
         
@@ -61,6 +65,7 @@
                 return false;
             }
             if (scroll > scrollPercent && !processing) {
+                $("#loader2").show();
                 processing = true;
                 $(window).scrollTop($(window).scrollTop() - 10);
                 $.ajax({
@@ -71,9 +76,11 @@
                         $("#ads").append(html);
                         processing = false;
                         lastIndex += count;
+                        $("#loader2").hide();
                     },
                     error: function () {
                         processing = false;
+                        $("#loader2").hide();
                     }
 
             });
