@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EFarmer.pk.Controllers
 {
+    /// <summary>
+    /// Manages User Accounts
+    /// </summary>
     public class AccountController : Controller
     {
         public IActionResult Register()

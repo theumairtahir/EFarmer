@@ -4,16 +4,6 @@
         <name>EFarmer.pk</name>
     </assembly>
     <members>
-        <member name="T:EFarmer.pk.Areas.Admin.Controllers.DashboardController">
-            <summary>
-            Manages admin dashboard
-            </summary>
-        </member>
-        <member name="T:EFarmer.pk.Controllers.AccountController">
-            <summary>
-            Manages User Accounts
-            </summary>
-        </member>
         <member name="T:EFarmer.pk.Controllers.ApiControllers.AdvertisementsController">
             <summary>
             Controls the requests and responses for advertisements

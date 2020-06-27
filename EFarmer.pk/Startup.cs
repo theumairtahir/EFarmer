@@ -40,6 +40,7 @@ namespace EFarmer.pk
             //dbcontext
             services.AddDbContext<EFarmerDbModel>(options => options.UseSqlServer(Common.ConnectionStrings.CONNECTION_STRING))
                 .AddUnitOfWork<EFarmerDbModel>();
+
             //swagger
             var pathToDoc = Configuration["Swagger:FileName"];
             services.AddSwaggerGen();
@@ -59,6 +60,7 @@ namespace EFarmer.pk
                 options.IncludeXmlComments(filePath);
 #pragma warning disable CS0618 // Type or member is obsolete
                 options.DescribeAllEnumsAsStrings();
+
 #pragma warning restore CS0618 // Type or member is obsolete
             });
             services.Configure<CookiePolicyOptions>(options =>
@@ -96,6 +98,16 @@ namespace EFarmer.pk
                 opts.SupportedUICultures = supportedCultures;
             });
             services.AddMvc(c => c.Conventions.Add(new SwaggerIgnore()));
+            //services.AddRouting();
+            //areas
+            //services.Configure<RazorViewEngineOptions>(options =>
+            //{
+            //    //options.AreaViewLocationFormats.Clear();
+            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
+            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
+            //    //options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
+            //    //options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,14 +132,17 @@ namespace EFarmer.pk
             var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(localizationOptions.Value);
 
-
             app.UseMvc(routes =>
             {
                 //area route
-                routes.MapRoute(
-                  name: "areas",
-                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
+                //routes.MapRoute(
+                //name: "areas",
+                //template: "{area=Admin}/{controller = Dashboard}/{action = Index}/{id?}");
+                routes.MapAreaRoute(
+                    name: "AdminArea",
+                    areaName: "Admin",
+                    template: "Admin/{controller=Home}/{action=Index}/{id?}");
+                //default route
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

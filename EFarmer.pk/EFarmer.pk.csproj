@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Company>SparkerZ</Company>
+    <Company>TechFlurry</Company>
     <Authors>Muhammad Umair Tahir</Authors>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
@@ -67,11 +67,6 @@
     <None Update="App_Data\w3layouts-License.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
 
   <ItemGroup>
