@@ -1,0 +1,26 @@
+﻿@using EFarmer.pk.Areas.Admin.Models.Shared
+@{
+    var breadCrumb = ViewBag.BreadCrumb == null ? new BreadcrumbViewModel() : (BreadcrumbViewModel)ViewBag.BreadCrumb;
+    bool isCreateRight = ViewBag.CreateRight == null || ViewBag.Create == "" ? false : (bool)ViewBag.CreateRight;
+}
+
+@if (breadCrumb.BreadCrumbs.Count > 0)
+{
+    <ol class="breadcrumb">
+        @foreach (var item in breadCrumb.BreadCrumbs)
+        {
+            var active = item.IsActive ? "active" : "";
+            if (!item.IsLast)
+            {
+                <li class="breadcrumb-item"><a href="@item.Link">@item.Name</a></li>
+            }
+            else
+            {
+                <li class="breadcrumb-item active">@item.Name</li>
+            }
+        }
+
+    </ol>
+}
+
+<button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New</button>

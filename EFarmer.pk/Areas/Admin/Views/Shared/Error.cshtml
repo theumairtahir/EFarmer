@@ -1,0 +1,41 @@
+﻿@model EFarmer.ViewModels.ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<section class="section-padding error-page pattern-bg ">
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Row -->
+        <div class="row">
+            <!-- Middle Content Area -->
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="error-container">
+                    @if (Model.ShowRequestId)
+                    {
+                        <div class="error-text">@Model.RequestId</div>
+                    }
+                    else
+                    {
+                        <div class="error-text">Error.</div>
+                    }
+                    <div class="error-info">An error occurred while processing your request.</div>
+                </div>
+            </div>
+
+            <!-- Middle Content Area  End -->
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Main Container End -->
+</section>
