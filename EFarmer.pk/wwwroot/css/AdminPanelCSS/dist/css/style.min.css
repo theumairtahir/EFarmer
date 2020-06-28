@@ -1,11 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700);
-@import url(../css/AdminPanelCSS/assets/icons/font-awesome/css/fontawesome-all.css);
-@import url(../css/AdminPanelCSS/assets/icons/simple-line-icons/css/simple-line-icons.css);
-@import url(../css/AdminPanelCSS/assets/icons/weather-icons/css/weather-icons.min.css);
-@import url(../css/AdminPanelCSS/assets/icons/themify-icons/themify-icons.css);
-@import url(../css/AdminPanelCSS/assets/icons/flag-icon-css/flag-icon.min.css);
-@import url(../css/AdminPanelCSS/assets/icons/material-design-iconic-font/css/materialdesignicons.min.css);
+@import url('../../assets/icons/font-awesome/css/fontawesome-all.css');
+@import url('../../assets/icons/simple-line-icons/css/simple-line-icons.css');
+@import url('../../assets/icons/weather-icons/css/weather-icons.min.css');
+@import url('../../assets/icons/themify-icons/themify-icons.css');
+@import url('../../assets/icons/flag-icon-css/flag-icon.min.css');
+@import url('../../assets/icons/material-design-iconic-font/css/material-design-iconic-font.min.css');
 @import url(https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700);
+
 
 .skin-default .topbar {
     background: #4F5467
