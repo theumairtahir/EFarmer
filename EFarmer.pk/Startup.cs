@@ -141,7 +141,7 @@ namespace EFarmer.pk
                 routes.MapAreaRoute(
                     name: "AdminArea",
                     areaName: "Admin",
-                    template: "Admin/{controller=Home}/{action=Index}/{id?}");
+                    template: "Admin/{controller=Dashboard}/{action=Index}/{id?}");
                 //default route
                 routes.MapRoute(
                     name: "default",

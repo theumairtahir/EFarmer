@@ -11,6 +11,9 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="~/images/favicon.ico">
     <title>Admin Panel | @EFarmer.pk.Common.CommonValues.APP_NAME</title>
+    <!--Toast CSS-->
+    <link href="~/css/AdminPanelCSS/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!--Custom Style-->
     <link href="~/css/AdminPanelCSS/dist/css/style.min.css" rel="stylesheet" />
     <!-- This page CSS -->
     @RenderSection("PageStyles", required: false)
@@ -80,8 +83,19 @@
     <script src="~/css/AdminPanelCSS/dist/js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="~/css/AdminPanelCSS/dist/js/sidebarmenu.js"></script>
+    <!--Sticky Kit-->
+    <script src="~/css/AdminPanelCSS/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/css/AdminPanelCSS/assets/node_modules/sparkline/jquery.sparkline.min.js"></script>
+    <!--Toast-->
+    <script src="~/css/AdminPanelCSS/assets/node_modules/toast-master/js/jquery.toast.js"></script>
     <!--Custom JavaScript -->
     <script src="~/css/AdminPanelCSS/dist/js/custom.min.js"></script>
+    <script type="text/javascript">
+        //globals
+        var appName = '@(EFarmer.pk.Common.CommonValues.APP_NAME)';
+        var formName = '@ViewData["Title"]';
+    </script>
+    <script src="~/css/AdminPanelCSS/dist/js/masterJs.js"></script>
     @RenderSection("PageScripts", required: false)
     <!--Inline Scripts-->
     @RenderSection("Scripts", required: false)
