@@ -31,8 +31,7 @@ namespace EFarmer.pk.Areas.Admin.Controllers
                 IsLast = true,
                 Name = "Dashboard"
             });
-            DashboardViewModel model = new DashboardViewModel();
-            return View(model);
+            return View();
         }
         [HttpGet]
         public IActionResult GetAreaChart()

@@ -146,7 +146,7 @@ var RefreshDashboard = function () {
                 data: result.data,
                 xkey: 'day',
                 ykeys: ['currentMonth', 'prevMonth'],
-                labels: result.labels,
+                labels: result.labelNames,
                 pointSize: 0,
                 fillOpacity: 0.4,
                 pointStrokeColors: result.colors,
