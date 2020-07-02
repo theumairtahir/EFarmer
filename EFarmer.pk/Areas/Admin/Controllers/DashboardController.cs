@@ -19,7 +19,6 @@ namespace EFarmer.pk.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.CreateRight = "Add New";
             ViewBag.BreadCrumb = Common.Functions.CreateBreadCrumb(new Models.Shared.BreadCrumb
             {
                 Link = Url.Action("Index", "Dashboard"),

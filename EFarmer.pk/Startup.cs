@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.Extensions.Options;
 using EFarmer.pk.Common;
+using System.Text.Json.Serialization;
 
 namespace EFarmer.pk
 {
@@ -69,6 +70,13 @@ namespace EFarmer.pk
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //services.AddControllersWithViews()
+            //        //.AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            //        .AddJsonOptions(options =>
+            //        {
+            //            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            //            options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //        });
             //Resources
             services.AddLocalization(opts =>
             {
