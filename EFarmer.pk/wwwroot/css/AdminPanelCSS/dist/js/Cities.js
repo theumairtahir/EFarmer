@@ -91,4 +91,11 @@ var resetForm = function () {
     $('#cityForm').trigger('reset');
 }
 
+var DeleteCity = function (id) {
+    createConfirmationAlert("Want to delete this record!", function () {
+        deleteData(id, deleteCityUrl, function (response) {
+            createSuccessAlert(response);
+        });
+    });
+};
 

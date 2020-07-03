@@ -63,6 +63,19 @@ var loadFormData = function (id, url, successCallback) {
     })
 };
 
+var deleteData = function (id, url, successCallback) {
+    var data = { id: id };
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        async: true,
+        success: successCallback,
+        error: function (response) {
+            ShowErrorMessage("An Error Occured!");
+        }
+    })
+};
 
 var createBasicAlert = function (message, title = null) {
     title = title == null || title == '' ? appName : title + ' says';

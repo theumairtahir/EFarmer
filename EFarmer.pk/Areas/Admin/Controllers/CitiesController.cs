@@ -131,5 +131,10 @@ namespace EFarmer.pk.Areas.Admin.Controllers
             };
             return Json(model);
         }
+        [HttpPost]
+        public IActionResult DeleteCity(int id)
+        {
+            return Json("Your data has been deleted");
+        }
     }
 }
