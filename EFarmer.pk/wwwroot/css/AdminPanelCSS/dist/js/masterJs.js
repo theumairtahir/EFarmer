@@ -61,4 +61,53 @@ var loadFormData = function (id, url, successCallback) {
             ShowErrorMessage("Failed to load data");
         }
     })
+};
+
+
+var createBasicAlert = function (message, title = null) {
+    title = title == null || title == '' ? appName : title + ' says';
+    swal(title, message);
+};
+
+var createSuccessAlert = function (message) {
+    swal("Good job!", message, "success");
+}
+
+var createConfirmationAlert = function (question, callback) {
+    swal({
+        title: "Are you sure?",
+        text: question,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, do it!"
+    }).then(result => {
+        if (result.value) {
+            //action callback
+            callback();
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+            createErrorAlert("Canceled", "Your action has been canceled");
+        }
+        //swal.closeModal();
+    });
+};
+
+var createErrorAlert = function (title, message) {
+    swal(title, message, "error");
+};
+
+var createAutoCloseAlert = function (title, message, timmer = 2) {
+    swal({
+        title: title,
+        text: message,
+        timer: (timmer * 1000),
+        showConfirmButton: false
+    });
+};
+var createImageAlert = function (title, message, imageUrl) {
+    swal({
+        title: title,
+        text: message,
+        imageUrl: imageUrl
+    });
 }
