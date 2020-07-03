@@ -1,7 +1,7 @@
 ﻿@using EFarmer.pk.Areas.Admin.Models.Shared
 @{
     var breadCrumb = ViewBag.BreadCrumb == null ? new BreadcrumbViewModel() : (BreadcrumbViewModel)ViewBag.BreadCrumb;
-    bool isCreateRight = ViewBag.CreateRight == null || ViewBag.CreateRight == "" ? false : true;
+    bool isCreateRight = ViewBag.Create == null || ViewBag.Create == "" ? false : true;
 }
 
 @if (breadCrumb.BreadCrumbs.Count > 0)
@@ -24,5 +24,5 @@
 }
 @if (isCreateRight)
 {
-    <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnCreateNew"><i class="fa fa-plus-circle"></i> @ViewBag.CreateRight</button>
+    <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnCreateNew"><i class="fa fa-plus-circle"></i> @ViewBag.Create</button>
 }

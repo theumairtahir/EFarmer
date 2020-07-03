@@ -94,6 +94,10 @@
         //globals
         var appName = '@(EFarmer.pk.Common.CommonValues.APP_NAME)';
         var formName = '@ViewData["Title"]';
+        var successMessage = '@ViewBag.Success';
+        var warningMessage = '@ViewBag.Warning';
+        var errorMessage = '@ViewBag.Error';
+        var infoMessage = '@ViewBag.Info';
     </script>
     <script src="~/css/AdminPanelCSS/dist/js/masterJs.js"></script>
     @RenderSection("PageScripts", required: false)

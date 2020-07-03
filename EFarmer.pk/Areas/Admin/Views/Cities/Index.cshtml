@@ -26,9 +26,10 @@
         </div>
     </div>
 </div>
-
+<partial name="_Edit" />
 @section PageScripts{
     <script src="~/css/AdminPanelCSS/assets/node_modules/datatables/datatables.min.js"></script>
+    <script src="~/css/AdminPanelCSS/dist/js/pages/validation.js"></script>
     <!-- start - This is for export functionality only -->
     <environment exclude="Development">
         <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -43,6 +44,10 @@
 @section Scripts{
     <script>
         var citiesDataUrl = '@Url.Action("GetDtCities")';
+        var formDataUrl = '@Url.Action("GetFormData")';
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+        $('#cityForm').jqBootstrapValidation();
+
     </script>
     <script src="~/css/AdminPanelCSS/dist/js/cities.js"></script>
 }

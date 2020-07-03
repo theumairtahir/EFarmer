@@ -15,8 +15,10 @@ namespace EFarmer.pk.Areas.Admin.Controllers
     [Area("Admin")]
     public class CitiesController : Controller
     {
-        public IActionResult Index()
+        private const string emptyString = "";
+        public IActionResult Index(string successMessage = emptyString, string errorMessage = emptyString, string warningMessage = emptyString, string infoMessage = emptyString)
         {
+            ViewBag.Create = pk.Common.CommonValues.CREATE_MESSAGE;
             ViewBag.BreadCrumb = Common.Functions.CreateBreadCrumb(new Models.Shared.BreadCrumb
             {
                 Link = Url.Action("Index", "Dashboard"),
@@ -28,34 +30,38 @@ namespace EFarmer.pk.Areas.Admin.Controllers
                 IsLast = true,
                 Name = "Cities"
             });
+            ViewBag.Info = infoMessage;
+            ViewBag.Success = successMessage;
+            ViewBag.Error = errorMessage;
+            ViewBag.Warning = warningMessage;
             return View();
         }
         [HttpPost]
         public IActionResult GetDtCities([FromBody]JqueryDataTablesParameters dataTableParams)
         {
-            List<CitiesViewModel> data = new List<CitiesViewModel>
+            List<CitiesListingViewModel> data = new List<CitiesListingViewModel>
             {
-                new CitiesViewModel
+                new CitiesListingViewModel
                 {
                     Id = 1,
                     Name = "Lahore"
                 },
-                new CitiesViewModel
+                new CitiesListingViewModel
                 {
                     Id = 2,
                     Name = "Islamabad"
                 },
-                new CitiesViewModel
+                new CitiesListingViewModel
                 {
                     Id = 3,
                     Name = "Karachi"
                 },
-                new CitiesViewModel
+                new CitiesListingViewModel
                 {
                     Id = 4,
                     Name = "Peshawar"
                 },
-                new CitiesViewModel
+                new CitiesListingViewModel
                 {
                     Id = 5,
                     Name = "Quetta"
@@ -108,6 +114,22 @@ namespace EFarmer.pk.Areas.Admin.Controllers
             {
                 throw;
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditCity(CityViewModel model)
+        {
+            return RedirectToAction("Index", new { successMessage = EFarmer.pk.Common.CommonValues.UPDATE_MESSAGE });
+        }
+        [HttpPost]
+        public IActionResult GetFormData(int id)
+        {
+            CityViewModel model = new CityViewModel
+            {
+                Id = id,
+                Name = "Lahore"
+            };
+            return Json(model);
         }
     }
 }

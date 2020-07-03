@@ -1,5 +1,14 @@
 ﻿$(document).ready(function () {
     loadDatatable();
+    $('#btnSave').on('click', function () {
+        if (true) {
+            $('#cityForm').submit();
+        }
+    });
+    $('#btnCreateNew').on('click', function () {
+        resetForm();
+        $('#editModal').modal('show');
+    });
 });
 $(window).resize(function () {
     //loadDatatable.columns.adjust().draw();
@@ -63,3 +72,23 @@ var loadDatatable = function () {
         },
     });
 };
+
+var EditCity = function (id) {
+    if (id) {
+        resetForm();
+        loadFormData(id, formDataUrl, function (response) {
+            $('#Id').val(response.id);
+            $('#Name').val(response.name);
+        });
+        $('#editModal').modal('show');
+    }
+    else {
+        ShowWarningMessage("Please select a record to edit");
+    }
+}
+var resetForm = function () {
+    //$("input,textarea").val('');
+    $('#cityForm').trigger('reset');
+}
+
+

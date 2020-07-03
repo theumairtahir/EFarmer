@@ -23,6 +23,9 @@ namespace EFarmer.pk.Common
         public static readonly string PROFILE_IMAGES_PATH = @"~/images/profile-images/";
         public static readonly string DEFAULT_PROFILE_IMAGE = "profile.jpg";
         public static readonly string LONG_DATE_FORMAT = "dd MMMM, yy";
+        public static readonly string UPDATE_MESSAGE = "Updated Successfully";
+        public static readonly string ADD_MESSAGE = "Added Successfully";
+        public static readonly string CREATE_MESSAGE = "Create New";
         public static readonly GeoLocation DEFAULT_LOCATION = new GeoLocation { Latitude = 31.478657m, Longitude = 74.287981m };
         static CommonValues()
         {

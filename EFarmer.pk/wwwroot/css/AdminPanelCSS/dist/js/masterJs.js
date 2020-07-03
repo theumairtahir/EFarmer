@@ -1,6 +1,14 @@
 ﻿
 $(document).ready(function () {
-
+    if (successMessage != '') {
+        ShowSuccessMessage(successMessage);
+    }
+    if (warningMessage != '') {
+        ShowWarningMessage(warningMessage);
+    }
+    if (errorMessage != '') {
+        ShowErrorMessage(errorMessage);
+    }
 });
 var ShowLoader = function () {
     $('#preloader').show();
@@ -40,3 +48,17 @@ var CreateToast = function (header, text, toastType, position) {
         stack: 6
     });
 };
+
+var loadFormData = function (id, url, successCallback) {
+    var data = { id: id };
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        async: false,
+        success: successCallback,
+        error: function (response) {
+            ShowErrorMessage("Failed to load data");
+        }
+    })
+}
