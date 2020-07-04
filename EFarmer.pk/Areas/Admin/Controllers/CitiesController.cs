@@ -136,5 +136,188 @@ namespace EFarmer.pk.Areas.Admin.Controllers
         {
             return Json("Your data has been deleted");
         }
+        [HttpPost]
+        public IActionResult GetPieChartData(int id)
+        {
+            var data = new List<RoseChartModel>
+            {
+                new RoseChartModel
+                {
+                    Color = "#feff89",
+                    Label = "Wheat",
+                    Value = 50
+                },
+                new RoseChartModel
+                {
+                    Color = "#ff9f68",
+                    Label = "Sunflower",
+                    Value = 15
+                },
+                new RoseChartModel
+                {
+                    Color = "#f85959",
+                    Label = "Rice",
+                    Value = 25
+                },
+                new RoseChartModel
+                {
+                    Color = "#7c203a",
+                    Label = "Cotton",
+                    Value = 10
+                }
+            };
+            PieChartViewModel model = new PieChartViewModel
+            {
+                Legend = data
+            };
+            return Json(model);
+        }
+        [HttpPost]
+        public IActionResult GetBarChartData(int id)
+        {
+            BarChartViewModel model = new BarChartViewModel
+            {
+                Ledgend = new List<BarChartModel>
+            {
+                new BarChartModel
+                {
+                    Color = "#28c7fa",
+                    Label = "Ads. Posted",
+                    Data = new List<BarChartData>
+                   {
+                       new BarChartData
+                       {
+                            Category="Jan",
+                             Value=20m
+                       },
+                       new BarChartData
+                       {
+                            Category="Feb",
+                             Value=25m
+                       },
+                       new BarChartData
+                       {
+                            Category="Mar",
+                             Value=57m
+                       },
+                       new BarChartData
+                       {
+                            Category="Apr",
+                             Value=76m
+                       },
+                       new BarChartData
+                       {
+                            Category="May",
+                             Value=43m
+                       },
+                       new BarChartData
+                       {
+                            Category="Jun",
+                             Value=56m
+                       },
+                       new BarChartData
+                       {
+                            Category="Jul",
+                             Value=98m
+                       },
+                       new BarChartData
+                       {
+                            Category="Aug",
+                             Value=78m
+                       },
+                       new BarChartData
+                       {
+                            Category="Sep",
+                             Value=20m
+                       },
+                       new BarChartData
+                       {
+                            Category="Oct",
+                             Value=45m
+                       },
+                       new BarChartData
+                       {
+                            Category="Nov",
+                             Value=35m
+                       },
+                       new BarChartData
+                       {
+                            Category="Dec",
+                             Value=65m
+                       }
+                   }
+                },
+                new BarChartModel
+                {
+                    Color = "#ff304f",
+                    Label = "Users Joined",
+                    Data = new List<BarChartData>
+                   {
+                       new BarChartData
+                       {
+                            Category="Jan",
+                             Value=5m
+                       },
+                       new BarChartData
+                       {
+                            Category="Feb",
+                             Value=7m
+                       },
+                       new BarChartData
+                       {
+                            Category="Mar",
+                             Value=17m
+                       },
+                       new BarChartData
+                       {
+                            Category="Apr",
+                             Value=6m
+                       },
+                       new BarChartData
+                       {
+                            Category="May",
+                             Value=13m
+                       },
+                       new BarChartData
+                       {
+                            Category="Jun",
+                             Value=26m
+                       },
+                       new BarChartData
+                       {
+                            Category="Jul",
+                             Value=8m
+                       },
+                       new BarChartData
+                       {
+                            Category="Aug",
+                             Value=27m
+                       },
+                       new BarChartData
+                       {
+                            Category="Sep",
+                             Value=2m
+                       },
+                       new BarChartData
+                       {
+                            Category="Oct",
+                             Value=45m
+                       },
+                       new BarChartData
+                       {
+                            Category="Nov",
+                             Value=25m
+                       },
+                       new BarChartData
+                       {
+                            Category="Dec",
+                             Value=16m
+                       }
+                   }
+                }
+            }
+            };
+            return Json(model);
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿
 $(document).ready(function () {
     if (successMessage != '') {
-        ShowSuccessMessage(successMessage);
+        createSuccessAlert(successMessage);
     }
     if (warningMessage != '') {
         ShowWarningMessage(warningMessage);
     }
     if (errorMessage != '') {
-        ShowErrorMessage(errorMessage);
+        createErrorAlert(createErrorAlert);
     }
 });
 var ShowLoader = function () {
