@@ -124,3 +124,6 @@ var createImageAlert = function (title, message, imageUrl) {
         imageUrl: imageUrl
     });
 }
+var reloadDataTable = function (dataTable) {
+    dataTable.ajax.reload();
+}

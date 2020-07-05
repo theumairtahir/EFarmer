@@ -6,23 +6,29 @@
 
 @if (breadCrumb.BreadCrumbs.Count > 0)
 {
-    <ol class="breadcrumb">
-        @foreach (var item in breadCrumb.BreadCrumbs)
-        {
-            var active = item.IsActive ? "active" : "";
-            if (!item.IsLast)
-            {
-                <li class="breadcrumb-item"><a href="@item.Link">@item.Name</a></li>
-            }
-            else
-            {
-                <li class="breadcrumb-item active">@item.Name</li>
-            }
-        }
+    <div class="row">
+        <div class="col-xs-8">
+            <ol class="breadcrumb">
+                @foreach (var item in breadCrumb.BreadCrumbs)
+                {
+                    var active = item.IsActive ? "active" : "";
+                    if (!item.IsLast)
+                    {
+                        <li class="breadcrumb-item"><a href="@item.Link">@item.Name</a></li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item active">@item.Name</li>
+                    }
+                }
 
-    </ol>
-}
-@if (isCreateRight)
-{
-    <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnCreateNew"><i class="fa fa-plus-circle"></i> @ViewBag.Create</button>
+            </ol>
+        </div>
+        <div class="col-xs-4">
+            @if (isCreateRight)
+            {
+                <button type="button" class="btn btn-primary d-lg-block m-l-15" id="btnCreateNew"><i class="fa fa-plus-circle"></i> @ViewBag.Create</button>
+            }
+        </div>
+    </div>
 }

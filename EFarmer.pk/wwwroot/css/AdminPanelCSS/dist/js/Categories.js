@@ -76,6 +76,7 @@ var DeleteCategory = function (id) {
     createConfirmationAlert("Want to delete this record!", function () {
         deleteData(id, deleteCategoryUrl, function (response) {
             createSuccessAlert(response);
+            reloadDataTable(categoriesTable);
         });
     });
 };

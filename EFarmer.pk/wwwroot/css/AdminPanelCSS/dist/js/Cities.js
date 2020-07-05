@@ -12,11 +12,9 @@
     });
 });
 $(window).resize(function () {
-    //loadDatatable.columns.adjust().draw();
 });
 var citiesTable;
 var loadDatatable = function () {
-    //$.fn.dataTable.ext.legacy.ajax = true;
     citiesTable = $('#dtCities').DataTable({
         // Design Assets
         stateSave: true,
@@ -96,6 +94,7 @@ var DeleteCity = function (id) {
     createConfirmationAlert("Want to delete this record!", function () {
         deleteData(id, deleteCityUrl, function (response) {
             createSuccessAlert(response);
+            reloadDataTable(citiesTable);
         });
     });
 };
