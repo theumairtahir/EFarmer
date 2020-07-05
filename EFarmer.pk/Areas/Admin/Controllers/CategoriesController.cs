@@ -15,7 +15,7 @@ namespace EFarmer.pk.Areas.Admin.Controllers
         private const string emptyString = "";
         public IActionResult Index(string successMessage = emptyString, string errorMessage = emptyString, string warningMessage = emptyString, string infoMessage = emptyString)
         {
-            ViewBag.Create = pk.Common.CommonValues.CREATE_MESSAGE;
+            ViewBag.Create = pk.Common.CommonValues.CREATE_CAPTION;
             ViewBag.BreadCrumb = Common.Functions.CreateBreadCrumb(new Models.Shared.BreadCrumb
             {
                 Link = Url.Action("Index", "Dashboard"),
@@ -73,10 +73,7 @@ namespace EFarmer.pk.Areas.Admin.Controllers
                         case 0:
                             data = data.OrderBy(x => x.Id).ToList();
                             break;
-                        case 1:
-                            data = data.OrderBy(x => x.Name).ToList();
-                            break;
-                        default:
+                        case 2:
                             data = data.OrderBy(x => x.Name).ToList();
                             break;
                     }
@@ -88,10 +85,7 @@ namespace EFarmer.pk.Areas.Admin.Controllers
                         case 0:
                             data = data.OrderByDescending(x => x.Id).ToList();
                             break;
-                        case 1:
-                            data = data.OrderByDescending(x => x.Name).ToList();
-                            break;
-                        default:
+                        case 2:
                             data = data.OrderByDescending(x => x.Name).ToList();
                             break;
                     }
