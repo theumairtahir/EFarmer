@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EFarmer.pk.Areas.Admin.Common;
+﻿using EFarmer.pk.Areas.Admin.Common;
 using EFarmer.pk.Areas.Admin.Models;
 using JqueryDataTables.ServerSide.AspNetCoreWeb.Extentions;
 using JqueryDataTables.ServerSide.AspNetCoreWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EFarmer.pk.Areas.Admin.Controllers
 {
@@ -132,6 +131,42 @@ namespace EFarmer.pk.Areas.Admin.Controllers
             {
                 Id = id,
                 Name = "Crop"
+            };
+            return Json(model);
+        }
+        [HttpPost]
+        public IActionResult GetPieChartData(int id)
+        {
+            var data = new List<RoseChartModel>
+            {
+                new RoseChartModel
+                {
+                    Color = "#feff89",
+                    Label = "Wheat",
+                    Value = 50
+                },
+                new RoseChartModel
+                {
+                    Color = "#ff9f68",
+                    Label = "Sunflower",
+                    Value = 15
+                },
+                new RoseChartModel
+                {
+                    Color = "#f85959",
+                    Label = "Rice",
+                    Value = 25
+                },
+                new RoseChartModel
+                {
+                    Color = "#7c203a",
+                    Label = "Cotton",
+                    Value = 10
+                }
+            };
+            PieChartViewModel model = new PieChartViewModel
+            {
+                Legend = data
             };
             return Json(model);
         }
