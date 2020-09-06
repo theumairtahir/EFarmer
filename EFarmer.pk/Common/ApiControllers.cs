@@ -17,20 +17,21 @@ namespace EFarmer.pk.Common
 
         public static List<string> GetApiControllerNames()
         {
-            var apiControllers = classes.Where(x =>
+            var apiControllers = classes.Where((x) =>
             {
+                bool result = false;
                 try
                 {
                     var namespaceName = x.Namespace;
-                    var result = (namespaceName.Contains("ApiControllers")
+                    result = (namespaceName.Contains("ApiControllers")
                                 && !(x.Name.Contains("<") ||
                                 x.Name.Contains(">")));
-                    return result;
                 }
-                catch (Exception)
+                catch (NullReferenceException)
                 {
-                    return false;
+                    result = false;
                 }
+                return result;
             })
             .Select(x => x.Name)
             .ToList();

@@ -18,5 +18,18 @@
             var result = string.Format(format, insightsCallback, editCallback, deleteCallback);
             return result;
         }
+        public static string GetActionButtonsWithBlockIcon(string insightsCallback, string blockCallback)
+        {
+            string format = @"<div class=""row"">
+                                                <div class=""col-6"">
+                                                    <a href = ""#"" onclick = ""{0}"" ><i class=""fas fa-chart-bar text-info"" title=""Insights""></i></a>
+                                                </div>
+                                                <div class=""col-6"">
+                                                    <a href=""#"" onclick=""{1}""><i class=""fas fa-ban text-danger"" title=""Block""></i></a>
+                                                </div>
+                                            </div>";
+            var result = string.Format(format, insightsCallback, blockCallback);
+            return result;
+        }
     }
 }

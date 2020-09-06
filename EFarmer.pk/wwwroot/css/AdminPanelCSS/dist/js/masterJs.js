@@ -10,6 +10,11 @@ $(document).ready(function () {
         createErrorAlert(createErrorAlert);
     }
 });
+$(document).on('click', '.thumbnail', function () {
+    //on image thumbnail click
+    var src = $(this).attr('src');
+    viewImage(src);
+});
 var ShowLoader = function () {
     $('#preloader').show();
 }
@@ -126,4 +131,8 @@ var createImageAlert = function (title, message, imageUrl) {
 }
 var reloadDataTable = function (dataTable) {
     dataTable.ajax.reload();
+}
+var viewImage = function (src) {
+    $('#imgViewer').attr("src", src);
+    $('#imageModal').modal('show');
 }
