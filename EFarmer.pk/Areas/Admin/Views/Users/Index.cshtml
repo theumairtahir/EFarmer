@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+@section PageStyles{
+    <link href="~/css/AdminPanelCSS/assets/node_modules/datatables/media/css/dataTables.bootstrap4.css" rel="stylesheet">
+}
+@section Styles{
+
+}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Users</h4>
+        <h6 class="card-subtitle">Here's the list of Users</h6>
+        <div class="table-responsive m-t-40">
+            <table id="dtUsers" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr#.</th>
+                        <th>Action</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Phone#.</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<partial name="_Edit" />
+<partial name="_Insights" />
+@section PageScripts{
+    <script src="~/css/AdminPanelCSS/assets/node_modules/datatables/datatables.min.js"></script>
+    <script src="~/css/AdminPanelCSS/dist/js/pages/validation.js"></script>
+    <script src="~/css/AdminPanelCSS/assets/node_modules/echarts/echarts-all.js"></script>
+    <!-- start - This is for export functionality only -->
+    <environment exclude="Development">
+        <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    </environment>
+}
+@section Scripts{
+    <script>
+        var usersDataUrl = '@Url.Action("GetDtUsers")';
+        var formDataUrl = '@Url.Action("GetFormData")';
+        var blockUserUrl = '@Url.Action("BlockUser")';
+        var pieChartUrl = '@Url.Action("GetPieChartData")';
+        var barChartUrl = '@Url.Action("GetBarChartData")';
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+        $('#UserForm').jqBootstrapValidation();
+
+    </script>
+    <script src="~/css/AdminPanelCSS/dist/js/Users.js"></script>
+}
