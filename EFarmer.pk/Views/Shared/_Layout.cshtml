@@ -201,6 +201,30 @@
     <script src="@Url.Content("~/js/color-switcher.js")"></script>
     <!-- Template Core JS -->
     <script src="@Url.Content("~/js/custom.js")"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBYx2KwvAqT_qDUIaOMMVYRCUYKdTZtPO0",
+            authDomain: "efarmer-dfec2.firebaseapp.com",
+            databaseURL: "https://efarmer-dfec2.firebaseio.com",
+            projectId: "efarmer-dfec2",
+            storageBucket: "efarmer-dfec2.appspot.com",
+            messagingSenderId: "376756459067",
+            appId: "1:376756459067:web:f31777a52d9ba1b9d5ee1e",
+            measurementId: "G-8YRQZ955DT"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
